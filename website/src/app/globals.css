@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-cormorant), serif;
+
+  /* Premium Gold Palette */
+  --color-gold-50: #fefdf8;
+  --color-gold-100: #faf6e6;
+  --color-gold-200: #f2e9c2;
+  --color-gold-300: #e7d594;
+  --color-gold-400: #d7ba63;
+  --color-gold-500: #c5a03c;
+  --color-gold-600: #a17e2c;
+  --color-gold-700: #7d5e21;
+  --color-gold-800: #584017;
+  --color-gold-900: #34250e;
+  --color-gold-950: #1b1206;
+
+  --color-gold-metallic: #d4af37;
+  
+  --color-dark-obsidian: #030303;
+  --color-dark-charcoal: #0a0a0a;
+  --color-dark-card: #121212;
+  --color-dark-card-hover: #1c1c1c;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #030303;
+  --foreground: #f4f4f5;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
+
+/* Custom utilities for premium luxury effects */
+@utility bg-gold-gradient {
+  background: linear-gradient(135deg, #f2e9c2 0%, #d4af37 50%, #7d5e21 100%);
+}
+
+@utility text-gold-gradient {
+  background: linear-gradient(135deg, #fefdf8 0%, #d4af37 35%, #a17e2c 70%, #584017 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility border-gold-shimmer {
+  border-image: linear-gradient(to right, #7d5e21, #d4af37, #7d5e21) 1;
+}
+
+@utility bg-grid-pattern {
+  background-size: 60px 60px;
+  background-image: 
+    linear-gradient(to right, rgba(212, 175, 55, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
+}
+
+@utility text-glow-gold {
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+/* Parallax scroll support */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030303;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2b1807;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c5a03c;
+}
+
