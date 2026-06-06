@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const words = ["Čistota", "Preciznost", "Spolehlivost", "Harmonie"];
@@ -14,19 +14,30 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(true);
 
-  // Cycle through slogans (coordinated with loading state to prevent overlap)
-  useEffect(() => {
-    if (index === words.length - 1 || progress >= 100 || !active) return;
-    const timeout = setTimeout(
-      () => {
-        setIndex((prev) => prev + 1);
-      },
-      index === 0 ? 400 : 360
-    );
-    return () => clearTimeout(timeout);
-  }, [index, progress, active]);
+  // Refs to share state between effects without causing re-renders/dependency issues
+  const isDoneRef = useRef(false);
+  const progressRef = useRef(0);
 
-  // Non-linear, organic and SNAPPY loading simulation (completes in ~800ms)
+  const dismiss = useCallback(() => {
+    setActive(false);
+    if (onComplete) onComplete();
+  }, [onComplete]);
+
+  // Cycle through slogans on a fixed schedule, independent of progress ticks.
+  // Check isDoneRef inside the callback rather than as a dependency.
+  useEffect(() => {
+    if (index >= words.length - 1) return;
+
+    const timeout = setTimeout(() => {
+      // If loading already finished, stop cycling — preloader will exit with whatever word is showing
+      if (isDoneRef.current) return;
+      setIndex((prev) => prev + 1);
+    }, index === 0 ? 400 : 360);
+
+    return () => clearTimeout(timeout);
+  }, [index]);
+
+  // Non-linear, organic and snappy loading simulation
   useEffect(() => {
     let currentProgress = 0;
     let timeoutId: NodeJS.Timeout;
@@ -34,10 +45,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     const updateProgress = () => {
       if (currentProgress >= 100) {
         setProgress(100);
-        timeoutId = setTimeout(() => {
-          setActive(false);
-          if (onComplete) onComplete();
-        }, 200);
+        progressRef.current = 100;
+        isDoneRef.current = true;
+        // Short delay before dismissing so 100% is visible
+        timeoutId = setTimeout(dismiss, 200);
         return;
       }
 
@@ -46,22 +57,23 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       let increment = 1;
 
       if (remaining > 60) {
-        increment = Math.floor(Math.random() * 15) + 12; // Fast start: +12 to +26
+        increment = Math.floor(Math.random() * 15) + 12;
       } else if (remaining > 20) {
-        increment = Math.floor(Math.random() * 8) + 6;   // Medium: +6 to +13
+        increment = Math.floor(Math.random() * 8) + 6;
       } else {
-        increment = Math.floor(Math.random() * 3) + 2;   // Finish: +2 to +4
+        increment = Math.floor(Math.random() * 3) + 2;
       }
 
       currentProgress = Math.min(100, currentProgress + increment);
       setProgress(currentProgress);
+      progressRef.current = currentProgress;
 
       // Fast tick delay
-      let nextDelay = Math.floor(Math.random() * 40) + 15; // 15ms to 55ms
+      let nextDelay = Math.floor(Math.random() * 40) + 15;
 
-      // Extremely brief organic stall (asset loading simulation)
+      // Brief organic stall at midpoint
       if (currentProgress > 45 && currentProgress < 65 && Math.random() > 0.5) {
-        nextDelay = Math.floor(Math.random() * 100) + 100; // tiny pause of 100-200ms
+        nextDelay = Math.floor(Math.random() * 100) + 100;
       }
 
       timeoutId = setTimeout(updateProgress, nextDelay);
@@ -71,7 +83,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     timeoutId = setTimeout(updateProgress, 100);
 
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [dismiss]);
 
   // Disable body scroll while loading
   useEffect(() => {
@@ -133,3 +145,4 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     </AnimatePresence>
   );
 }
+
