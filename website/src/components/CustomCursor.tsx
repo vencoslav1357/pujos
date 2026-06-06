@@ -69,20 +69,9 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Tiny Inner Dot */}
+      {/* Smooth Lagging Minimalist Follower Ring */}
       <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-blue-royal rounded-full pointer-events-none z-50"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
-      
-      {/* Smooth Lagging Outer Ring */}
-      <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-50 border border-blue-royal/40 bg-blue-royal/5"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-50 border border-blue-royal/25 bg-transparent"
         style={{
           x: ringX,
           y: ringY,
@@ -90,12 +79,12 @@ export default function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          width: isHovering ? 48 : 24,
-          height: isHovering ? 48 : 24,
-          backgroundColor: isHovering ? "rgba(37, 99, 235, 0.15)" : "rgba(37, 99, 235, 0.05)",
-          borderColor: isHovering ? "rgba(37, 99, 235, 0.8)" : "rgba(37, 99, 235, 0.4)",
+          width: isHovering ? 32 : 16,
+          height: isHovering ? 32 : 16,
+          backgroundColor: isHovering ? "rgba(37, 99, 235, 0.06)" : "rgba(37, 99, 235, 0)",
+          borderColor: isHovering ? "rgba(37, 99, 235, 0.5)" : "rgba(37, 99, 235, 0.25)",
         }}
-        transition={{ type: "spring", stiffness: 450, damping: 25 }}
+        transition={{ type: "spring", stiffness: 400, damping: 28 }}
       />
     </>
   );

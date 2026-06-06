@@ -22,21 +22,51 @@ export default function Preloader() {
     return () => clearTimeout(timeout);
   }, [index]);
 
-  // Linear progression loader
+  // Non-linear, organic loading simulation
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => setActive(false), 400);
-          return 100;
-        }
-        const increment = Math.max(1, Math.floor((100 - prev) * 0.15));
-        return Math.min(100, prev + increment);
-      });
-    }, 45);
+    let currentProgress = 0;
+    let timeoutId: NodeJS.Timeout;
 
-    return () => clearInterval(timer);
+    const updateProgress = () => {
+      if (currentProgress >= 100) {
+        setProgress(100);
+        timeoutId = setTimeout(() => setActive(false), 400);
+        return;
+      }
+
+      // Random increments based on current progress
+      const remaining = 100 - currentProgress;
+      let increment = 1;
+
+      if (remaining > 75) {
+        increment = Math.floor(Math.random() * 12) + 4; // Fast start: +4 to +15
+      } else if (remaining > 35) {
+        increment = Math.floor(Math.random() * 8) + 2;  // Medium progress: +2 to +9
+      } else {
+        increment = Math.floor(Math.random() * 3) + 1;  // Slow finish: +1 to +3
+      }
+
+      currentProgress = Math.min(100, currentProgress + increment);
+      setProgress(currentProgress);
+
+      // Random delay between ticks to feel natural (non-constant updates)
+      let nextDelay = Math.floor(Math.random() * 120) + 35; // 35ms to 155ms
+
+      // Introduce random organic stalls (asset loading simulation)
+      if (currentProgress > 30 && currentProgress < 40 && Math.random() > 0.45) {
+        nextDelay = Math.floor(Math.random() * 250) + 200; // pause for 200-450ms
+      }
+      if (currentProgress > 72 && currentProgress < 82 && Math.random() > 0.45) {
+        nextDelay = Math.floor(Math.random() * 350) + 250; // pause for 250-600ms
+      }
+
+      timeoutId = setTimeout(updateProgress, nextDelay);
+    };
+
+    // Initial delay before start
+    timeoutId = setTimeout(updateProgress, 150);
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   // Disable body scroll while loading
@@ -88,10 +118,10 @@ export default function Preloader() {
               Načítání exkluzivního zážitku
             </p>
             <div className="flex items-baseline gap-1">
-              <span className="font-serif text-7xl sm:text-9xl font-bold tracking-tighter text-slate-100">
+              <span className="font-serif text-7xl sm:text-9xl font-bold tracking-tighter text-slate-800">
                 {progress.toString().padStart(3, "0")}
               </span>
-              <span className="text-lg text-blue-600 font-light font-sans">%</span>
+              <span className="text-lg text-blue-600 font-semibold font-sans">%</span>
             </div>
           </div>
         </motion.div>
