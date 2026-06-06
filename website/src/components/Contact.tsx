@@ -17,8 +17,8 @@ import {
   Map, 
   Loader2,
   AlertCircle,
-  ChevronRight,
-  Info
+  Link2,
+  Link2Off
 } from "lucide-react";
 
 export default function Contact() {
@@ -26,7 +26,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
-  // Configuration State (Calculator)
+  // Calculator Configuration State
   const [serviceType, setServiceType] = useState<"residence" | "commercial">("commercial");
   const [area, setArea] = useState(100);
   const [frequency, setFrequency] = useState("Pravidelně (1-2x týdně)");
@@ -43,7 +43,8 @@ export default function Contact() {
     construction: false,
   });
 
-  // Contact details (Inquiry Form)
+  // Contact Form Details
+  const [attachData, setAttachData] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -209,28 +210,39 @@ export default function Contact() {
     setIsSubmitting(true);
     setApiError(null);
 
-    // Prepare active extras list
-    const activeExtrasList: string[] = [];
-    if (extras.windows) activeExtrasList.push(`Mytí oken (${windowsCost} Kč)`);
-    if (extras.carpet) activeExtrasList.push(`Tepování koberců (${carpetCost} Kč)`);
-    if (extras.upholstery) activeExtrasList.push(`Čištění čalounění (${upholsteryCost} Kč)`);
-    if (extras.construction) activeExtrasList.push(`Úklid po stavbě (${constructionCost} Kč)`);
+    let payload = {};
 
-    const payload = {
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email,
-      serviceType,
-      area,
-      frequency: `${frequency} (${frequencyLabel})`,
-      address,
-      distance,
-      transportPrice: transportCost,
-      estimatedPriceMin: totalCalculatedMin,
-      estimatedPriceMax: totalCalculatedMax,
-      extras: activeExtrasList,
-      message: formData.message,
-    };
+    if (attachData) {
+      // Prepare active extras list
+      const activeExtrasList: string[] = [];
+      if (extras.windows) activeExtrasList.push(`Mytí oken (${windowsCost} Kč)`);
+      if (extras.carpet) activeExtrasList.push(`Tepování koberců (${carpetCost} Kč)`);
+      if (extras.upholstery) activeExtrasList.push(`Čištění čalounění (${upholsteryCost} Kč)`);
+      if (extras.construction) activeExtrasList.push(`Úklid po stavbě (${constructionCost} Kč)`);
+
+      payload = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        serviceType,
+        area,
+        frequency: `${frequency} (${frequencyLabel})`,
+        address,
+        distance,
+        transportPrice: transportCost,
+        estimatedPriceMin: totalCalculatedMin,
+        estimatedPriceMax: totalCalculatedMax,
+        extras: activeExtrasList,
+        message: formData.message,
+      };
+    } else {
+      payload = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message: formData.message,
+      };
+    }
 
     try {
       const response = await fetch("/api/send-email", {
@@ -263,15 +275,6 @@ export default function Contact() {
       email: "",
       message: "",
     });
-    setExtras({
-      windows: false,
-      carpet: false,
-      upholstery: false,
-      construction: false,
-    });
-    setArea(100);
-    setAddress("");
-    setDistance(undefined);
     setFormSubmitted(false);
     setApiError(null);
   };
@@ -290,19 +293,18 @@ export default function Contact() {
           </span>
           <h2 className="text-3xl sm:text-5xl font-serif text-slate-900 tracking-tight leading-tight">
             Spočítejte si cenu úklidu <br />
-            <span className="text-blue-gradient italic font-bold">a rovnou nám odešlete zadání</span>
+            <span className="text-blue-gradient italic font-bold">a získejte nabídku na míru</span>
           </h2>
           <div className="w-24 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-6" />
         </div>
 
-        {/* Main Grid: Calculator on Left, Contact form on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* TOP ROW: Split 2-column layout (Calculator + Receipt) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-12">
           
-          {/* LEFT COLUMN: Price Calculator (col-span-7) */}
-          <div className="lg:col-span-7 flex flex-col gap-6">
-            <div className="p-6 md:p-8 bg-white border border-slate-200/80 rounded-sm shadow-sm">
+          {/* CALCULATOR PANEL (col-span-7) */}
+          <div className="lg:col-span-7 flex flex-col justify-between p-6 md:p-8 bg-white border border-slate-200/80 rounded-sm shadow-sm">
+            <div>
               <h3 className="text-lg font-serif text-slate-900 mb-6 font-bold flex items-center gap-2 border-b border-slate-100 pb-4">
-                <span className="w-6 h-6 rounded-sm bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold font-sans">1</span>
                 Chytrá kalkulačka parametrů
               </h3>
 
@@ -415,13 +417,14 @@ export default function Contact() {
                         type="button"
                         disabled={isCalculatingDistance || address.trim().length < 5}
                         onClick={() => handleCalculateDistance(address)}
-                        className="px-3 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 disabled:opacity-50 rounded-sm font-semibold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1 shadow-sm cursor-pointer"
+                        className="px-4 bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:bg-blue-400 rounded-sm font-semibold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 shadow-sm shadow-blue-500/10 cursor-pointer"
                       >
                         {isCalculatingDistance ? (
-                          <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-600" />
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
                         ) : (
                           <Map className="w-3.5 h-3.5" />
                         )}
+                        <span>Spočítat dopravu</span>
                       </button>
                     </div>
                   </div>
@@ -429,7 +432,7 @@ export default function Contact() {
 
                 {/* Distance alerts */}
                 {distance !== undefined && (
-                  <div className="text-xs text-blue-700 bg-blue-50 border border-blue-100/50 px-3 py-2.5 rounded-sm flex justify-between items-center">
+                  <div className="text-xs text-blue-700 bg-blue-50 border border-blue-100/50 px-3 py-2.5 rounded-sm flex justify-between items-center mt-1">
                     <span className="flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-blue-600" />
                       Dojezdová vzdálenost z Prahy 10: <strong>{distance} km</strong>
@@ -438,7 +441,7 @@ export default function Contact() {
                   </div>
                 )}
                 {distanceError && (
-                  <div className="text-xs text-amber-700 bg-amber-50 border border-amber-100/50 px-3 py-2.5 rounded-sm flex items-center gap-1.5">
+                  <div className="text-xs text-amber-700 bg-amber-50 border border-amber-100/50 px-3 py-2.5 rounded-sm flex items-center gap-1.5 mt-1">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
                     <span>{distanceError}</span>
                   </div>
@@ -483,14 +486,15 @@ export default function Contact() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* DETAILED RECEIPT BREAKDOWN */}
-            <div className="p-6 md:p-8 bg-white border border-slate-200/80 rounded-sm shadow-sm relative overflow-hidden bg-receipt-pattern">
-              {/* Receipt top border decoration */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-blue-600" />
-              
+          {/* RECEIPT DETAILED BREAKDOWN (col-span-5) */}
+          <div className="lg:col-span-5 p-6 md:p-8 bg-white border border-slate-200/80 rounded-sm shadow-sm relative overflow-hidden bg-receipt-pattern flex flex-col justify-between">
+            {/* Receipt top border decoration */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-blue-600" />
+            
+            <div>
               <h3 className="text-lg font-serif text-slate-900 mb-6 font-bold flex items-center gap-2 border-b border-slate-100 pb-4">
-                <span className="w-6 h-6 rounded-sm bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold font-sans">2</span>
                 Rozpis kalkulace a matematika ceny
               </h3>
 
@@ -499,6 +503,7 @@ export default function Contact() {
                 <AnimatePresence mode="popLayout">
                   {/* Base Cleaning rate */}
                   <motion.div 
+                    key="base-rate"
                     layout
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -515,6 +520,7 @@ export default function Contact() {
                   {/* Frequency modification */}
                   {frequencyMultiplier !== 1.0 && (
                     <motion.div 
+                      key="frequency-adjust"
                       layout
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -534,6 +540,7 @@ export default function Contact() {
                   {/* Transport */}
                   {distance !== undefined && (
                     <motion.div 
+                      key="transport-cost"
                       layout
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -551,6 +558,7 @@ export default function Contact() {
                   {/* Extras Breakdown */}
                   {extras.windows && (
                     <motion.div 
+                      key="windows-cost"
                       layout
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -567,6 +575,7 @@ export default function Contact() {
 
                   {extras.carpet && (
                     <motion.div 
+                      key="carpet-cost"
                       layout
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -583,6 +592,7 @@ export default function Contact() {
 
                   {extras.upholstery && (
                     <motion.div 
+                      key="upholstery-cost"
                       layout
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -599,6 +609,7 @@ export default function Contact() {
 
                   {extras.construction && (
                     <motion.div 
+                      key="construction-cost"
                       layout
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -614,78 +625,101 @@ export default function Contact() {
                   )}
                 </AnimatePresence>
               </div>
+            </div>
 
-              {/* Total indicator with dot border and receipt bottom teeth styling */}
-              <div className="mt-8 pt-6 border-t-2 border-dashed border-slate-200">
-                <div className="flex flex-col sm:flex-row justify-between items-baseline gap-2">
-                  <div>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block font-sans">
-                      Výsledné orientační rozmezí ceny
-                    </span>
-                    <span className="text-3xl font-bold font-sans tracking-tight text-blue-600">
-                      {totalCalculatedMin.toLocaleString("cs-CZ")} – {totalCalculatedMax.toLocaleString("cs-CZ")} Kč
-                    </span>
-                  </div>
-                  <div className="text-[10px] text-slate-400 text-left sm:text-right font-sans leading-relaxed max-w-[240px]">
-                    * Cena se odvíjí od reálné míry znečištění. Závazné nacenění vám potvrdíme.
-                  </div>
+            {/* Total indicator */}
+            <div className="mt-8 pt-6 border-t-2 border-dashed border-slate-200">
+              <div className="flex flex-col justify-between gap-2">
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block font-sans">
+                    Výsledné orientační rozmezí ceny
+                  </span>
+                  <span className="text-3xl font-bold font-sans tracking-tight text-blue-600">
+                    {totalCalculatedMin.toLocaleString("cs-CZ")} – {totalCalculatedMax.toLocaleString("cs-CZ")} Kč
+                  </span>
+                </div>
+                <div className="text-[10px] text-slate-400 font-sans leading-relaxed mt-2">
+                  * Cena se odvíjí od reálné míry znečištění. Závazné nacenění vám potvrdíme po odeslání.
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* RIGHT COLUMN: Contact & Inquiry Form (col-span-5) */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            <div className="p-6 md:p-8 bg-white border border-slate-200/80 rounded-sm shadow-sm relative overflow-hidden">
-              <h3 className="text-lg font-serif text-slate-900 mb-6 font-bold flex items-center gap-2 border-b border-slate-100 pb-4">
-                <span className="w-6 h-6 rounded-sm bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold font-sans">3</span>
-                Nezávazná poptávka
-              </h3>
+        {/* BOTTOM ROW: Centered Contact & Inquiry Form */}
+        <div className="max-w-4xl mx-auto w-full mb-16">
+          <div className="p-6 md:p-10 bg-white border border-slate-200/80 rounded-sm shadow-sm relative overflow-hidden">
+            <h3 className="text-xl font-serif text-slate-900 mb-6 font-bold border-b border-slate-100 pb-4">
+              Nezávazná poptávka
+            </h3>
 
-              <AnimatePresence mode="wait">
-                {formSubmitted ? (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex flex-col items-center justify-center py-10 text-center"
+            <AnimatePresence mode="wait">
+              {formSubmitted ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center justify-center py-10 text-center"
+                >
+                  <div className="w-14 h-14 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center mb-5">
+                    <CheckCircle2 className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <h4 className="font-serif text-xl text-slate-900 mb-2 font-bold">
+                    Poptávka odeslána
+                  </h4>
+                  <p className="text-sm text-slate-600 max-w-md mb-6 leading-relaxed">
+                    Děkujeme! Vaše poptávka byla úspěšně zpracována a odeslána na náš e-mail. J. Pufr se vám co nejdříve ozve zpět.
+                  </p>
+                  <button
+                    onClick={handleReset}
+                    className="px-6 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 hover:text-blue-600 hover:border-blue-500/30 rounded-sm text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer"
                   >
-                    <div className="w-14 h-14 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center mb-5">
-                      <CheckCircle2 className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <h4 className="font-serif text-xl text-slate-900 mb-2 font-bold">
-                      Poptávka odeslána
-                    </h4>
-                    <p className="text-xs text-slate-600 max-w-xs mb-6 leading-relaxed">
-                      Děkujeme! Data z vaší kalkulace byla úspěšně přenesena a odeslána na náš e-mail. J. Pufr se vám co nejdříve ozve.
-                    </p>
-                    <button
-                      onClick={handleReset}
-                      className="px-5 py-2 bg-slate-50 border border-slate-200 text-slate-700 hover:text-blue-600 hover:border-blue-500/30 rounded-sm text-[10px] uppercase tracking-wider font-semibold transition-colors cursor-pointer"
-                    >
-                      Nová poptávka
-                    </button>
-                  </motion.div>
-                ) : (
-                  <motion.form
-                    key="form"
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onSubmit={handleSubmit}
-                    className="flex flex-col gap-4.5"
-                  >
-                    {/* Live configuration transfer indicator */}
-                    <div className="px-3.5 py-2.5 bg-blue-50/50 border border-blue-100/50 rounded-sm text-xs text-slate-700 flex items-center justify-between">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-                        <span className="font-sans font-medium">Data z kalkulačky propojena</span>
+                    Odeslat novou zprávu
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-6"
+                >
+                  {/* Toggle Calculator Data Connection */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 border border-slate-250 rounded-sm gap-3">
+                    <div className="flex items-start sm:items-center gap-3">
+                      <div 
+                        onClick={() => setAttachData(!attachData)}
+                        className={`w-5 h-5 border flex items-center justify-center rounded-sm transition-colors cursor-pointer flex-shrink-0 ${
+                          attachData ? "bg-blue-600 border-blue-600" : "bg-white border-slate-350"
+                        }`}
+                      >
+                        {attachData && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
                       </div>
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-blue-600 font-sans">
-                        {serviceType === "residence" ? "Domácnost" : "Firma"}
-                      </span>
+                      <div>
+                        <span className="text-sm font-semibold text-slate-800 block">Připojit data z kalkulačky k poptávce</span>
+                        <span className="text-xs text-slate-400 block">Odešle nám kompletní navolené parametry pro rychlejší nacenění.</span>
+                      </div>
                     </div>
 
+                    <div className="flex-shrink-0">
+                      {attachData ? (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 border border-blue-150 rounded-full text-xs text-blue-700 font-semibold">
+                          <Link2 className="w-3.5 h-3.5" />
+                          Propojeno ({totalCalculatedMin.toLocaleString("cs-CZ")} Kč)
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-xs text-slate-500 font-semibold">
+                          <Link2Off className="w-3.5 h-3.5" />
+                          Nepropojeno
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Contact Inputs Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Name */}
                     <div className="flex flex-col gap-1.5">
                       <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
@@ -696,112 +730,113 @@ export default function Contact() {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="px-3.5 py-2.5 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans shadow-sm"
-                        placeholder="Napište jméno nebo firmu..."
+                        className="px-4 py-3 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans shadow-sm"
+                        placeholder="Napište jméno..."
                       />
                     </div>
 
-                    {/* Contact details row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Phone */}
-                      <div className="flex flex-col gap-1.5">
-                        <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
-                          Telefonní číslo
-                        </label>
-                        <input
-                          type="tel"
-                          required
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="px-3.5 py-2.5 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans shadow-sm"
-                          placeholder="+420..."
-                        />
-                      </div>
-
-                      {/* Email */}
-                      <div className="flex flex-col gap-1.5">
-                        <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
-                          E-mail
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="px-3.5 py-2.5 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans shadow-sm"
-                          placeholder="vytvor@priklad.cz"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Message */}
+                    {/* Phone */}
                     <div className="flex flex-col gap-1.5">
                       <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
-                        Poznámka / doplňující zpráva (nepovinné)
+                        Telefonní číslo
                       </label>
-                      <textarea
-                        rows={2}
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="px-3.5 py-2.5 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans resize-none shadow-sm"
-                        placeholder="Napište nám speciální požadavky..."
+                      <input
+                        type="tel"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="px-4 py-3 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans shadow-sm"
+                        placeholder="+420..."
                       />
                     </div>
 
-                    {/* Error display */}
-                    {apiError && (
-                      <div className="text-xs text-rose-700 bg-rose-50 border border-rose-100 p-2.5 rounded-sm flex items-center gap-1.5">
-                        <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                        <span>{apiError}</span>
-                      </div>
+                    {/* Email */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
+                        E-mail
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="px-4 py-3 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans shadow-sm"
+                        placeholder="vytvor@priklad.cz"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Message */}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
+                      Zpráva / upřesnění poptávky
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="px-4 py-3 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans resize-none shadow-sm"
+                      placeholder="Napište nám jakékoliv doplňující informace nebo specifické požadavky..."
+                    />
+                  </div>
+
+                  {/* Error display */}
+                  {apiError && (
+                    <div className="text-xs text-rose-700 bg-rose-50 border border-rose-100 p-3 rounded-sm flex items-center gap-1.5">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      <span>{apiError}</span>
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-4 bg-blue-royal text-white font-semibold text-xs uppercase tracking-widest rounded-sm hover:bg-blue-700 disabled:opacity-50 shadow-md shadow-blue-500/10 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Odesílám poptávku...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Odeslat poptávku</span>
+                        <Send className="w-3.5 h-3.5" />
+                      </>
                     )}
+                  </button>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
 
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-4 bg-blue-royal text-white font-semibold text-xs uppercase tracking-widest rounded-sm hover:bg-blue-700 disabled:opacity-50 shadow-md shadow-blue-500/10 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          <span>Odesílám poptávku...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Odeslat poptávku</span>
-                          <Send className="w-3.5 h-3.5" />
-                        </>
-                      )}
-                    </button>
-                  </motion.form>
-                )}
-              </AnimatePresence>
+        {/* QUICK CONTACT INFO ROW AT THE BOTTOM */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto w-full">
+          <a href="tel:+420777777777" className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4 group hover:border-blue-500/35 transition-all duration-300">
+            <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center group-hover:bg-blue-50 group-hover:border-blue-500 transition-all"><Phone className="w-4 h-4 text-blue-600" /></span>
+            <div>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block font-sans">Zavolejte nám</span>
+              <span className="text-sm font-semibold text-slate-750 font-sans group-hover:text-blue-600 transition-colors">+420 777 777 777</span>
             </div>
-
-            {/* QUICK CONTACT INFO CARD */}
-            <div className="p-6 bg-white border border-slate-200/80 rounded-sm shadow-sm flex flex-col gap-4">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest font-sans border-b border-slate-100 pb-2">
-                Rychlé kontakty
-              </h4>
-              <div className="flex flex-col gap-3">
-                <a href="tel:+420777777777" className="flex items-center gap-3 group text-sm font-semibold text-slate-700 hover:text-blue-600 transition-colors">
-                  <span className="w-8 h-8 rounded-sm bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:border-blue-300 transition-all"><Phone className="w-4 h-4 text-blue-600" /></span>
-                  +420 777 777 777
-                </a>
-                <a href="mailto:info@jpufr.cz" className="flex items-center gap-3 group text-sm font-semibold text-slate-700 hover:text-blue-600 transition-colors">
-                  <span className="w-8 h-8 rounded-sm bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:border-blue-300 transition-all"><Mail className="w-4 h-4 text-blue-600" /></span>
-                  info@jpufr.cz
-                </a>
-                <div className="flex items-center gap-3 text-sm font-semibold text-slate-700">
-                  <span className="w-8 h-8 rounded-sm bg-slate-50 border border-slate-100 flex items-center justify-center"><Clock className="w-4 h-4 text-blue-600" /></span>
-                  Po - So: 8:00 - 18:00
-                </div>
-              </div>
+          </a>
+          <a href="mailto:info@jpufr.cz" className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4 group hover:border-blue-500/35 transition-all duration-300">
+            <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center group-hover:bg-blue-50 group-hover:border-blue-500 transition-all"><Mail className="w-4 h-4 text-blue-600" /></span>
+            <div>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block font-sans">Napište nám</span>
+              <span className="text-sm font-semibold text-slate-750 font-sans group-hover:text-blue-600 transition-colors">info@jpufr.cz</span>
+            </div>
+          </a>
+          <div className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4">
+            <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center"><Clock className="w-4 h-4 text-blue-600" /></span>
+            <div>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block font-sans">Provozní doba</span>
+              <span className="text-sm font-semibold text-slate-750 font-sans">Po - So: 8:00 - 18:00</span>
             </div>
           </div>
-
         </div>
+
       </div>
     </section>
   );
