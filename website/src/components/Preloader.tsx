@@ -14,17 +14,17 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(true);
 
-  // Cycle through slogans (fast-paced)
+  // Cycle through slogans (coordinated with loading state to prevent overlap)
   useEffect(() => {
-    if (index === words.length - 1) return;
+    if (index === words.length - 1 || progress >= 100 || !active) return;
     const timeout = setTimeout(
       () => {
-        setIndex(index + 1);
+        setIndex((prev) => prev + 1);
       },
-      index === 0 ? 300 : 220
+      index === 0 ? 400 : 360
     );
     return () => clearTimeout(timeout);
-  }, [index]);
+  }, [index, progress, active]);
 
   // Non-linear, organic and SNAPPY loading simulation (completes in ~800ms)
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
               <motion.p
                 initial={{ y: "100%" }}
                 animate={{ y: 0 }}
-                transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
+                transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
                 key={index}
                 className="font-serif text-5xl sm:text-7xl md:text-8xl italic text-slate-900 font-medium py-2 text-center"
               >
