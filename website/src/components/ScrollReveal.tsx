@@ -32,7 +32,7 @@ export default function ScrollReveal({ text, className = "" }: ScrollRevealProps
 
         return (
           <span key={index} className="relative mr-[0.28em] mb-[0.15em] inline-block select-none">
-            <motion.span style={{ opacity }} className="text-zinc-100">
+            <motion.span style={{ opacity }} className="text-current">
               {word}
             </motion.span>
           </span>

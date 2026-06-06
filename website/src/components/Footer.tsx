@@ -1,10 +1,12 @@
+"use client";
+
 import { Phone, Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-zinc-950 border-t border-zinc-900 py-16 md:py-20 relative">
+    <footer className="bg-slate-50 border-t border-slate-150 py-16 md:py-20 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Upper Footer Grid */}
@@ -13,13 +15,16 @@ export default function Footer() {
           {/* Col 1: Brand */}
           <div className="lg:col-span-4 flex flex-col items-start">
             <a href="#" className="flex items-center gap-2 group mb-6">
-              <span className="font-serif text-2xl font-bold tracking-widest text-gold-400 group-hover:text-gold-300 transition-colors">
-                JOSEF PUFR
+              <span className="font-serif text-2xl font-bold tracking-widest text-slate-900 group-hover:text-blue-600 transition-colors">
+                J. PUFR
               </span>
-              <span className="h-1.5 w-1.5 rounded-full bg-gold-400 group-hover:bg-gold-300 transition-colors self-end mb-2"></span>
+              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-sans self-end mb-1.5">
+                úklidové služby
+              </span>
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 group-hover:bg-blue-500 transition-colors self-end mb-2"></span>
             </a>
-            <p className="text-zinc-400 font-light text-sm leading-relaxed mb-6 max-w-sm">
-              Exkluzivní ruční mytí, detailing vozidel a prémiové úklidové služby pro byty, rezidence i firmy. Klademe důraz na nekompromisní detaily.
+            <p className="text-slate-500 font-light text-sm leading-relaxed mb-6 max-w-sm">
+              Špičkový úklid komerčních a rezidenčních prostor. Zajišťujeme precizní pravidelnou i generální údržbu kanceláří, domů a mytí oken s důrazem na spolehlivost a preciznost.
             </p>
             {/* Social icons */}
             <div className="flex gap-4">
@@ -27,7 +32,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-sm bg-zinc-900 border border-zinc-800 hover:border-gold-500/40 text-zinc-400 hover:text-gold-400 flex items-center justify-center transition-all duration-300"
+                className="w-10 h-10 rounded-sm bg-white border border-slate-200 hover:border-blue-500/40 text-slate-400 hover:text-blue-600 flex items-center justify-center transition-all duration-300 shadow-sm"
                 aria-label="Instagram"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -40,7 +45,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-sm bg-zinc-900 border border-zinc-800 hover:border-gold-500/40 text-zinc-400 hover:text-gold-400 flex items-center justify-center transition-all duration-300"
+                className="w-10 h-10 rounded-sm bg-white border border-slate-200 hover:border-blue-500/40 text-slate-400 hover:text-blue-600 flex items-center justify-center transition-all duration-300 shadow-sm"
                 aria-label="Facebook"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -52,7 +57,7 @@ export default function Footer() {
 
           {/* Col 2: Navigation Links */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs uppercase tracking-widest text-gold-400 font-semibold mb-6">
+            <h4 className="text-xs uppercase tracking-widest text-blue-600 font-semibold mb-6">
               Odkazy
             </h4>
             <div className="flex flex-col gap-4">
@@ -60,7 +65,7 @@ export default function Footer() {
                 <a
                   key={link}
                   href={`#${link === "Úvod" ? "" : link.toLowerCase().replace("naše ", "").replace("ú", "u").replace("ě", "e").replace("í", "i")}`}
-                  className="text-sm text-zinc-400 hover:text-gold-300 transition-colors w-fit font-light"
+                  className="text-sm text-slate-500 hover:text-blue-600 transition-colors w-fit font-light"
                 >
                   {link}
                 </a>
@@ -70,39 +75,39 @@ export default function Footer() {
 
           {/* Col 3: Services */}
           <div className="lg:col-span-3">
-            <h4 className="text-xs uppercase tracking-widest text-gold-400 font-semibold mb-6">
+            <h4 className="text-xs uppercase tracking-widest text-blue-600 font-semibold mb-6">
               Naše Služby
             </h4>
-            <div className="flex flex-col gap-4 text-sm text-zinc-400 font-light">
-              <span className="hover:text-gold-200 transition-colors cursor-pointer">Korekce a leštění laku</span>
-              <span className="hover:text-gold-200 transition-colors cursor-pointer">Aplikace keramiky 9H</span>
-              <span className="hover:text-gold-200 transition-colors cursor-pointer">Hloubkové tepování interiérů</span>
-              <span className="hover:text-gold-200 transition-colors cursor-pointer">Generální úklid rezidencí</span>
-              <span className="hover:text-gold-200 transition-colors cursor-pointer">Pravidelný servis kanceláří</span>
+            <div className="flex flex-col gap-4 text-sm text-slate-500 font-light">
+              <span className="hover:text-blue-600 transition-colors cursor-pointer">Pravidelný úklid kanceláří</span>
+              <span className="hover:text-blue-600 transition-colors cursor-pointer">Generální úklid rezidencí</span>
+              <span className="hover:text-blue-600 transition-colors cursor-pointer">Mytí oken a prosklených ploch</span>
+              <span className="hover:text-blue-600 transition-colors cursor-pointer">Hloubkové čištění koberců</span>
+              <span className="hover:text-blue-600 transition-colors cursor-pointer">Jednorázové úklidy po stavbě</span>
             </div>
           </div>
 
           {/* Col 4: Contact details */}
           <div className="lg:col-span-3 flex flex-col gap-4">
-            <h4 className="text-xs uppercase tracking-widest text-gold-400 font-semibold mb-6">
+            <h4 className="text-xs uppercase tracking-widest text-blue-600 font-semibold mb-6">
               Kontakt
             </h4>
             <a
               href="tel:+420777777777"
-              className="flex items-start gap-3 group text-sm text-zinc-400 hover:text-gold-300 transition-colors font-light"
+              className="flex items-start gap-3 group text-sm text-slate-500 hover:text-blue-600 transition-colors font-light"
             >
-              <Phone className="w-4 h-4 text-gold-400 mt-0.5" />
+              <Phone className="w-4 h-4 text-blue-600 mt-0.5" />
               <span>+420 777 777 777</span>
             </a>
             <a
-              href="mailto:info@josefpufr.cz"
-              className="flex items-start gap-3 group text-sm text-zinc-400 hover:text-gold-300 transition-colors font-light"
+              href="mailto:info@jpufr.cz"
+              className="flex items-start gap-3 group text-sm text-slate-500 hover:text-blue-600 transition-colors font-light"
             >
-              <Mail className="w-4 h-4 text-gold-400 mt-0.5" />
-              <span>info@josefpufr.cz</span>
+              <Mail className="w-4 h-4 text-blue-600 mt-0.5" />
+              <span>info@jpufr.cz</span>
             </a>
-            <div className="flex items-start gap-3 text-sm text-zinc-400 font-light">
-              <MapPin className="w-4 h-4 text-gold-400 mt-0.5" />
+            <div className="flex items-start gap-3 text-sm text-slate-500 font-light">
+              <MapPin className="w-4 h-4 text-blue-600 mt-0.5" />
               <span>Průmyslová 1234, Praha 10</span>
             </div>
           </div>
@@ -110,13 +115,13 @@ export default function Footer() {
         </div>
 
         {/* Lower Copyright & Legal Row */}
-        <div className="border-t border-zinc-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-zinc-500 font-light font-sans text-center sm:text-left">
-            &copy; {currentYear} Josef Pufr. Všechna práva vyhrazena.
+        <div className="border-t border-slate-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-slate-400 font-light font-sans text-center sm:text-left">
+            &copy; {currentYear} J. Pufr úklidové služby. Všechna práva vyhrazena.
           </p>
-          <p className="text-xs text-zinc-500 font-light font-sans flex items-center gap-1">
+          <p className="text-xs text-slate-400 font-light font-sans flex items-center gap-1">
             <span>Navrhnuto s důrazem na</span>
-            <span className="text-gold-400 font-medium">dokonalost</span>
+            <span className="text-blue-600 font-semibold">spolehlivost</span>
           </p>
         </div>
 

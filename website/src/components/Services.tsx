@@ -2,61 +2,61 @@
 
 import { motion } from "framer-motion";
 import { 
-  Car, 
-  Sparkles, 
-  ShieldCheck, 
-  Droplet, 
   Home, 
+  Sparkles, 
+  Droplet, 
+  Calendar,
   Building, 
-  Compass, 
+  Briefcase,
+  Construction,
   Layers,
   ArrowUpRight 
 } from "lucide-react";
 
 export default function Services() {
-  const detailingServices = [
+  const residentialServices = [
     {
-      icon: <Car className="w-5 h-5 text-gold-400" />,
-      title: "Ruční mytí & Decontamination",
-      desc: "Šetrné a hloubkové odstranění nečistot (clay bar) bez poškození laku.",
+      icon: <Home className="w-5 h-5 text-blue-600" />,
+      title: "Generální úklid domácností",
+      desc: "Komplexní precizní úklid rodinných domů a bytů se zaměřením na skryté detaily.",
     },
     {
-      icon: <Layers className="w-5 h-5 text-gold-400" />,
-      title: "Korekce & Leštění laku",
-      desc: "Vícekrokové rozleštění škrábanců pro obnovu zrcadlového lesku.",
+      icon: <Droplet className="w-5 h-5 text-blue-600" />,
+      title: "Mytí oken a ostatních prosklených ploch.",
+      desc: "Precizní mytí oken, zimních zahrad, skleněných zábradlí a dalších prosklených prvků.",
     },
     {
-      icon: <ShieldCheck className="w-5 h-5 text-gold-400" />,
-      title: "Aplikace keramické ochrany",
-      desc: "Certifikovaná dlouhodobá ochrana karoserie, disků a oken s hydrofobním efektem.",
+      icon: <Sparkles className="w-5 h-5 text-blue-600" />,
+      title: "Hloubkové čištění koberců",
+      desc: "Tepování koberců, matrací a čištění luxusních sedacích souprav či čalounění.",
     },
     {
-      icon: <Droplet className="w-5 h-5 text-gold-400" />,
-      title: "Detailní čištění interiéru",
-      desc: "Hloubkové tepování, čištění pórů kůže a její kompletní impregnace.",
+      icon: <Calendar className="w-5 h-5 text-blue-600" />,
+      title: "Pravidelný udržovací úklid",
+      desc: "Udržování permanentní čistoty u vás doma v dohodnutých intervalech.",
     },
   ];
 
-  const cleaningServices = [
+  const commercialServices = [
     {
-      icon: <Home className="w-5 h-5 text-gold-400" />,
-      title: "Generální úklid rezidencí",
-      desc: "Komplexní precizní úklid domů a bytů se zaměřením na skryté detaily.",
+      icon: <Building className="w-5 h-5 text-blue-600" />,
+      title: "Špičkový úklid firemních prostor",
+      desc: "Reprezentativní úklid pro firmy, které dbají na špičkový dojem u svých klientů a zaměstnanců.",
     },
     {
-      icon: <Sparkles className="w-5 h-5 text-gold-400" />,
-      title: "Hloubkové čištění čalounění",
-      desc: "Tepování koberců, matrací a čištění luxusních sedacích souprav.",
+      icon: <Briefcase className="w-5 h-5 text-blue-600" />,
+      title: "Kancelářské a administrativní budovy",
+      desc: "Pravidelná a spolehlivá správa čistoty v administrativních komplexech a open-space.",
     },
     {
-      icon: <Building className="w-5 h-5 text-gold-400" />,
-      title: "Komerční prostory & Kanceláře",
-      desc: "Reprezentativní úklid pro firmy, které dbají na špičkový dojem u klientů.",
+      icon: <Construction className="w-5 h-5 text-blue-600" />,
+      title: "Úklid po stavbě a rekonstrukci",
+      desc: "Jednorázové generální čištění a zbavení prachu po stavebních úpravách a malování.",
     },
     {
-      icon: <Compass className="w-5 h-5 text-gold-400" />,
-      title: "Mytí oken & Prosklených ploch",
-      desc: "Bezešvé mytí velkoformátových oken, zimních zahrad a prosklených fasád.",
+      icon: <Layers className="w-5 h-5 text-blue-600" />,
+      title: "Komplexní údržba objektů",
+      desc: "Správa čistoty komerčních nemovitostí navržená přesně podle požadavků provozu.",
     },
   ];
 
@@ -76,28 +76,28 @@ export default function Services() {
   } as const;
 
   return (
-    <section id="sluzby" className="py-24 md:py-32 bg-zinc-950 relative overflow-hidden">
+    <section id="sluzby" className="py-24 md:py-32 bg-slate-50 relative overflow-hidden">
       {/* Background radial highlight for subtle premium depth */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gold-950/10 rounded-full blur-[160px] pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-50/50 rounded-full blur-[160px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Heading */}
         <div className="flex flex-col items-center text-center mb-20">
-          <span className="text-xs uppercase tracking-[0.25em] text-gold-400 font-sans mb-3">
+          <span className="text-xs uppercase tracking-[0.25em] text-blue-600 font-sans mb-3 font-semibold">
             Naše Specializace
           </span>
-          <h2 className="text-3xl sm:text-5xl font-serif text-zinc-100 tracking-tight leading-tight max-w-2xl">
-            Prémiové služby navržené pro <br />
-            <span className="text-gold-gradient italic font-medium">maximální estetiku</span>
+          <h2 className="text-3xl sm:text-5xl font-serif text-slate-900 tracking-tight leading-tight max-w-2xl">
+            Profesionální úklidové služby <br />
+            <span className="text-blue-gradient italic font-bold">podle nejvyšších standardů</span>
           </h2>
-          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold-400 to-transparent mt-6" />
+          <div className="w-24 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-6" />
         </div>
 
         {/* Services Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-16">
           
-          {/* Column 1: Car Detailing */}
+          {/* Column 1: Residential Cleaning */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -106,31 +106,31 @@ export default function Services() {
             className="flex flex-col"
           >
             {/* Banner Card */}
-            <div className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-zinc-800 hover:border-gold-500/40 transition-all duration-500">
+            <div className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-slate-200 hover:border-blue-500/30 transition-all duration-500 shadow-sm">
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
-                style={{ backgroundImage: "url('/car_detail_card.png')" }}
+                style={{ backgroundImage: "url('/home_clean_card.png')" }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
               
               {/* Floating label */}
-              <div className="absolute top-6 right-6 px-3 py-1 bg-zinc-950/80 border border-gold-400/30 rounded-sm">
-                <span className="text-[10px] tracking-widest text-gold-400 uppercase font-sans">
-                  Detailing & Auta
+              <div className="absolute top-6 right-6 px-3 py-1 bg-white/90 border border-blue-100 rounded-sm shadow-sm">
+                <span className="text-[10px] tracking-widest text-blue-600 uppercase font-sans font-bold">
+                  Rezidence & Domy
                 </span>
               </div>
 
               {/* Title & Overlay Trigger */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
                 <div>
-                  <h3 className="font-serif text-2xl text-zinc-100 mb-1 group-hover:text-gold-300 transition-colors">
-                    Prémiový Detailing Vozidel
+                  <h3 className="font-serif text-2xl text-white mb-1 group-hover:text-blue-200 transition-colors">
+                    Rezidenční úklid
                   </h3>
-                  <p className="text-xs text-zinc-400 font-sans max-w-sm">
-                    Materiály a postupy s garancí špičkového výsledku. Ochrana investice do vašeho vozu.
+                  <p className="text-xs text-slate-200 font-sans max-w-sm font-light">
+                    Dokonalá čistota a svěžest u vás doma s maximální péčí o citlivé povrchy.
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-zinc-950 border border-zinc-850 group-hover:border-gold-500 flex items-center justify-center text-zinc-400 group-hover:text-gold-400 transition-all duration-300">
+                <div className="w-10 h-10 rounded-full bg-white border border-slate-100 group-hover:border-blue-500 flex items-center justify-center text-slate-500 group-hover:text-blue-600 transition-all duration-300 shadow-sm">
                   <ArrowUpRight className="w-5 h-5" />
                 </div>
               </div>
@@ -144,20 +144,20 @@ export default function Services() {
               viewport={{ once: true }}
               className="flex flex-col gap-6"
             >
-              {detailingServices.map((service, index) => (
+              {residentialServices.map((service, index) => (
                 <motion.div
                   key={index}
                   variants={cardVariants}
-                  className="flex gap-4 p-5 bg-zinc-900/30 border border-zinc-900/50 rounded-sm hover:border-gold-500/10 hover:bg-zinc-900/50 transition-all duration-300 group"
+                  className="flex gap-4 p-5 bg-white border border-slate-100 rounded-sm hover:border-blue-500/10 hover:bg-slate-50/50 transition-all duration-300 group shadow-sm"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-sm bg-gold-950/20 border border-gold-500/10 flex items-center justify-center group-hover:border-gold-500/30 transition-colors">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-sm bg-blue-50 border border-blue-100 flex items-center justify-center group-hover:border-blue-300 transition-colors">
                     {service.icon}
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold tracking-wide text-zinc-200 uppercase mb-1 font-sans group-hover:text-zinc-100 transition-colors">
+                    <h4 className="text-sm font-semibold tracking-wide text-slate-800 uppercase mb-1 font-sans group-hover:text-blue-600 transition-colors">
                       {service.title}
                     </h4>
-                    <p className="text-sm text-zinc-400 font-light leading-relaxed">
+                    <p className="text-sm text-slate-500 font-light leading-relaxed">
                       {service.desc}
                     </p>
                   </div>
@@ -166,7 +166,7 @@ export default function Services() {
             </motion.div>
           </motion.div>
 
-          {/* Column 2: Premium Cleaning */}
+          {/* Column 2: Commercial Cleaning */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -175,31 +175,31 @@ export default function Services() {
             className="flex flex-col"
           >
             {/* Banner Card */}
-            <div className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-zinc-800 hover:border-gold-500/40 transition-all duration-500">
+            <div className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-slate-200 hover:border-blue-500/30 transition-all duration-500 shadow-sm">
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
-                style={{ backgroundImage: "url('/home_clean_card.png')" }}
+                style={{ backgroundImage: "url('/office_clean_card.png')" }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
               
               {/* Floating label */}
-              <div className="absolute top-6 right-6 px-3 py-1 bg-zinc-950/80 border border-gold-400/30 rounded-sm">
-                <span className="text-[10px] tracking-widest text-gold-400 uppercase font-sans">
-                  Luxusní Úklid
+              <div className="absolute top-6 right-6 px-3 py-1 bg-white/90 border border-blue-100 rounded-sm shadow-sm">
+                <span className="text-[10px] tracking-widest text-blue-600 uppercase font-sans font-bold">
+                  Firmy & Kanceláře
                 </span>
               </div>
 
               {/* Title & Overlay Trigger */}
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
                 <div>
-                  <h3 className="font-serif text-2xl text-zinc-100 mb-1 group-hover:text-gold-300 transition-colors">
-                    Prémiové Úklidové Služby
+                  <h3 className="font-serif text-2xl text-white mb-1 group-hover:text-blue-200 transition-colors">
+                    Komerční úklid
                   </h3>
-                  <p className="text-xs text-zinc-400 font-sans max-w-sm">
-                    Dokonalá harmonie čistoty u vás doma i v kanceláři. Maximální spolehlivost a diskrétnost.
+                  <p className="text-xs text-slate-200 font-sans max-w-sm font-light">
+                    Reprezentativní a hygienicky čisté prostředí pro bezproblémový chod vaší firmy.
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-zinc-950 border border-zinc-850 group-hover:border-gold-500 flex items-center justify-center text-zinc-400 group-hover:text-gold-400 transition-all duration-300">
+                <div className="w-10 h-10 rounded-full bg-white border border-slate-100 group-hover:border-blue-500 flex items-center justify-center text-slate-500 group-hover:text-blue-600 transition-all duration-300 shadow-sm">
                   <ArrowUpRight className="w-5 h-5" />
                 </div>
               </div>
@@ -213,20 +213,20 @@ export default function Services() {
               viewport={{ once: true }}
               className="flex flex-col gap-6"
             >
-              {cleaningServices.map((service, index) => (
+              {commercialServices.map((service, index) => (
                 <motion.div
                   key={index}
                   variants={cardVariants}
-                  className="flex gap-4 p-5 bg-zinc-900/30 border border-zinc-900/50 rounded-sm hover:border-gold-500/10 hover:bg-zinc-900/50 transition-all duration-300 group"
+                  className="flex gap-4 p-5 bg-white border border-slate-100 rounded-sm hover:border-blue-500/10 hover:bg-slate-50/50 transition-all duration-300 group shadow-sm"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-sm bg-gold-950/20 border border-gold-500/10 flex items-center justify-center group-hover:border-gold-500/30 transition-colors">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-sm bg-blue-50 border border-blue-100 flex items-center justify-center group-hover:border-blue-300 transition-colors">
                     {service.icon}
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold tracking-wide text-zinc-200 uppercase mb-1 font-sans group-hover:text-zinc-100 transition-colors">
+                    <h4 className="text-sm font-semibold tracking-wide text-slate-800 uppercase mb-1 font-sans group-hover:text-blue-600 transition-colors">
                       {service.title}
                     </h4>
-                    <p className="text-sm text-zinc-400 font-light leading-relaxed">
+                    <p className="text-sm text-slate-500 font-light leading-relaxed">
                       {service.desc}
                     </p>
                   </div>

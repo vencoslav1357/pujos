@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const words = ["Čistota", "Preciznost", "Detailing", "Dokonalost"];
+const words = ["Čistota", "Preciznost", "Spolehlivost", "Harmonie"];
 
 export default function Preloader() {
   const [index, setIndex] = useState(0);
@@ -31,7 +31,6 @@ export default function Preloader() {
           setTimeout(() => setActive(false), 400);
           return 100;
         }
-        // Increment speed increases near completion for smooth flow
         const increment = Math.max(1, Math.floor((100 - prev) * 0.15));
         return Math.min(100, prev + increment);
       });
@@ -58,14 +57,14 @@ export default function Preloader() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ y: "-100%", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
-          className="fixed inset-0 z-50 bg-zinc-950 flex flex-col justify-between p-10 md:p-16 pointer-events-auto"
+          className="fixed inset-0 z-50 bg-white flex flex-col justify-between p-10 md:p-16 pointer-events-auto"
         >
           {/* Logo Brand Header */}
           <div className="flex justify-between items-center w-full z-10">
-            <span className="font-serif text-lg tracking-widest text-gold-400 font-bold">
-              JOSEF PUFR
+            <span className="font-serif text-lg tracking-widest text-blue-600 font-bold">
+              J. PUFR
             </span>
-            <div className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse" />
+            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-pulse" />
           </div>
 
           {/* Slogan Reveal Text */}
@@ -76,23 +75,23 @@ export default function Preloader() {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
                 key={index}
-                className="font-serif text-5xl sm:text-7xl md:text-8xl italic text-zinc-100 font-medium py-2 text-center"
+                className="font-serif text-5xl sm:text-7xl md:text-8xl italic text-slate-900 font-medium py-2 text-center"
               >
-                <span className="text-gold-gradient text-glow-gold">{words[index]}</span>.
+                <span className="text-blue-gradient text-glow-blue">{words[index]}</span>.
               </motion.p>
             </div>
           </div>
 
           {/* Progress Indicator Footer */}
-          <div className="flex justify-between items-end w-full border-t border-zinc-900 pt-8 z-10">
-            <p className="text-xs uppercase tracking-widest text-zinc-500 font-sans">
+          <div className="flex justify-between items-end w-full border-t border-slate-100 pt-8 z-10">
+            <p className="text-xs uppercase tracking-widest text-slate-400 font-sans">
               Načítání exkluzivního zážitku
             </p>
             <div className="flex items-baseline gap-1">
-              <span className="font-serif text-7xl sm:text-9xl font-bold tracking-tighter text-zinc-800">
+              <span className="font-serif text-7xl sm:text-9xl font-bold tracking-tighter text-slate-100">
                 {progress.toString().padStart(3, "0")}
               </span>
-              <span className="text-lg text-gold-500 font-light font-sans">%</span>
+              <span className="text-lg text-blue-600 font-light font-sans">%</span>
             </div>
           </div>
         </motion.div>

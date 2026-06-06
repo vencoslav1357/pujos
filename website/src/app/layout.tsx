@@ -15,9 +15,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Josef Pufr | Prémiové Čištění Aut & Detailing",
-  description: "Exkluzivní péče o vaše vozy a profesionální úklidové služby. Preciznost, špičkové technologie a smysl pro detail v každém kroku.",
-  keywords: ["čištění aut", "detailing", "ruční mytí", "profesionální úklid", "čištění interiérů", "čištění exteriérů", "čištění koberců", "Josef Pufr"],
+  title: "J. Pufr | Profesionální Úklidové Služby",
+  description: "Špičková péče o komerční i rezidenční prostory. Zajišťujeme pravidelný i generální úklid kanceláří, domů a mytí oken s důrazem na spolehlivost a preciznost.",
+  keywords: ["profesionální úklid", "úklidové služby", "čištění koberců", "J. Pufr", "úklid firem", "úklid domů", "mytí oken"],
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
       lang="cs"
       className={`${cormorant.variable} ${inter.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-100 font-sans">
+      <body className="min-h-full flex flex-col bg-white text-slate-900 font-sans">
         {children}
       </body>
     </html>

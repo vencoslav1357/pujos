@@ -7,27 +7,27 @@ export default function Process() {
   const steps = [
     {
       num: "01",
-      icon: <Calendar className="w-6 h-6 text-gold-400" />,
+      icon: <Calendar className="w-6 h-6 text-blue-600" />,
       title: "Nezávazná Konzultace",
       desc: "Kontaktujete nás přes formulář nebo telefonicky. Prodiskutujeme vaše přání, typ vozu či rozsah prostor a domluvíme termín.",
     },
     {
       num: "02",
-      icon: <ClipboardList className="w-6 h-6 text-gold-400" />,
+      icon: <ClipboardList className="w-6 h-6 text-blue-600" />,
       title: "Analýza & Plánování",
-      desc: "Před zahájením prací zhodnotíme stav povrchů nebo laku. Navrhneme ideální technologický postup a odsouhlasíme si finální rozsah péče.",
+      desc: "Před zahájením prací zhodnotíme stav povrchů. Navrhneme ideální technologický postup a odsouhlasíme si finální rozsah péče.",
     },
     {
       num: "03",
-      icon: <Sparkles className="w-6 h-6 text-gold-400" />,
+      icon: <Sparkles className="w-6 h-6 text-blue-600" />,
       title: "Precizní Realizace",
-      desc: "Využíváme nejšetrnější techniky, špičkové vybavení a prémiové produkty. Každému centimetru věnujeme stoprocentní pozornost.",
+      desc: "Využíváme nejšetrnější techniky, špičkové vybavení a prémiové produkty.",
     },
     {
       num: "04",
-      icon: <ShieldCheck className="w-6 h-6 text-gold-400" />,
+      icon: <ShieldCheck className="w-6 h-6 text-blue-600" />,
       title: "Předání & Perfekcionismus",
-      desc: "Výsledek zkontrolujeme pod speciálním světlem. Předáme vám dokonale čisté dílo a doporučíme, jak udržet jeho bezchybný stav co nejdéle.",
+      desc: "Výsledek zkontrolujeme. Předáme Vám čisté dílo.",
     },
   ];
 
@@ -50,22 +50,22 @@ export default function Process() {
   } as const;
 
   return (
-    <section id="prubeh" className="py-24 md:py-32 bg-zinc-950 relative overflow-hidden">
+    <section id="prubeh" className="py-24 md:py-32 bg-white relative overflow-hidden">
       {/* Background elements */}
-      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-gold-900/5 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-blue-50/30 rounded-full blur-[120px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Title */}
         <div className="flex flex-col items-center text-center mb-24">
-          <span className="text-xs uppercase tracking-[0.25em] text-gold-400 font-sans mb-3">
+          <span className="text-xs uppercase tracking-[0.25em] text-blue-600 font-sans mb-3 font-semibold">
             Náš Postup
           </span>
-          <h2 className="text-3xl sm:text-5xl font-serif text-zinc-100 tracking-tight leading-tight max-w-2xl">
+          <h2 className="text-3xl sm:text-5xl font-serif text-slate-900 tracking-tight leading-tight max-w-2xl">
             Cesta k dosažení <br />
-            <span className="text-gold-gradient italic font-medium">dokonalého výsledku</span>
+            <span className="text-blue-gradient italic font-bold">dokonalého výsledku</span>
           </h2>
-          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold-400 to-transparent mt-6" />
+          <div className="w-24 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-6" />
         </div>
 
         {/* Timeline Grid */}
@@ -77,7 +77,7 @@ export default function Process() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 relative"
         >
           {/* Connecting Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[50px] left-[5%] right-[5%] h-[1px] bg-gradient-to-r from-gold-950 via-gold-500/20 to-gold-950 z-0" />
+          <div className="hidden lg:block absolute top-[50px] left-[5%] right-[5%] h-[1px] bg-gradient-to-r from-slate-100 via-blue-500/20 to-slate-100 z-0" />
 
           {steps.map((step, index) => (
             <motion.div
@@ -87,24 +87,24 @@ export default function Process() {
             >
               {/* Connector marker */}
               <div className="flex items-center justify-between w-full mb-6">
-                <div className="w-12 h-12 rounded-sm bg-zinc-900 border border-zinc-800 flex items-center justify-center group-hover:border-gold-500 group-hover:bg-gold-950/10 transition-all duration-300 shadow-md">
+                <div className="w-12 h-12 rounded-sm bg-slate-50 border border-slate-150 flex items-center justify-center group-hover:border-blue-500 group-hover:bg-blue-50/50 transition-all duration-300 shadow-sm">
                   {step.icon}
                 </div>
-                <span className="font-serif text-4xl font-extrabold text-gold-900/40 group-hover:text-gold-500/20 transition-colors">
+                <span className="font-serif text-4xl font-extrabold text-blue-900/10 group-hover:text-blue-500/20 transition-colors">
                   {step.num}
                 </span>
               </div>
 
               {/* Card content */}
-              <h3 className="text-lg font-serif text-zinc-200 tracking-wide mb-3 group-hover:text-gold-300 transition-colors">
+              <h3 className="text-lg font-serif text-slate-800 tracking-wide mb-3 group-hover:text-blue-600 transition-colors font-medium">
                 {step.title}
               </h3>
-              <p className="text-sm text-zinc-400 font-light leading-relaxed">
+              <p className="text-sm text-slate-500 font-light leading-relaxed">
                 {step.desc}
               </p>
 
               {/* Decorative side indicator */}
-              <div className="w-1 h-0 bg-gold-400 group-hover:h-8 transition-all duration-300 absolute left-[-16px] top-[10px]" />
+              <div className="w-1 h-0 bg-blue-500 group-hover:h-8 transition-all duration-300 absolute left-[-16px] top-[10px]" />
             </motion.div>
           ))}
         </motion.div>

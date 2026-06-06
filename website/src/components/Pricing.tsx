@@ -1,79 +1,80 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Info } from "lucide-react";
+import { Check, Truck, Info, Home, Building } from "lucide-react";
 
 export default function Pricing() {
-  const carPackages = [
+  const pricingCards = [
     {
-      name: "Executive Care",
-      price: "2 490",
-      period: "od",
-      desc: "Základní prémiová péče o exteriér i interiér s hydrofobní ochranou.",
+      icon: <Home className="w-8 h-8 text-blue-600" />,
+      name: "Rezidenční úklid",
+      price: "Dle velikosti",
+      desc: "Kompletní péče o domácnosti, rodinné domy a bytové prostory.",
       popular: false,
       features: [
-        "Šetrné ruční mytí s pH neutrálním šamponem",
-        "Chemická dekontaminace laku (odstranění asfaltu a polétavé rzi)",
-        "Sušení vzduchem a mikrovlákny s vysokou gramáží",
-        "Aplikace tekutého křemičitého vosku (ochrana 3 měsíce)",
-        "Kompletní vysávání a čištění interiéru včetně zavazadlového prostoru",
-        "Ošetření a oživení vnitřních plastů a palubní desky",
-        "Mytí oken z obou stran",
+        "Jednorázové i pravidelné generální úklidy",
+        "Mytí oken a ostatních prosklených ploch",
+        "Hloubkové mokré čištění (tepování) koberců a čalounění",
+        "Individuální úklidové plány na míru",
+        "Profesionální čisticí prostředky v ceně",
+        "Bezplatná osobní prohlídka a nacenění",
       ],
+      ctaText: "Poptat úklid domu",
     },
     {
-      name: "Premium Detailing",
-      price: "6 990",
-      period: "od",
-      desc: "Kompletní omlazení vozu s jednokrokovým leštěním laku a hloubkovým čištěním interiéru.",
+      icon: <Building className="w-8 h-8 text-blue-600" />,
+      name: "Komerční úklid",
+      price: "Individuální",
+      desc: "Špičkový úklid firemních prostor, kanceláří a administrativních budov.",
       popular: true,
       features: [
-        "Vše z balíčku Executive Care",
-        "Jednokrokové strojní leštění laku (odstranění jemných škrábanců a hologramů)",
-        "Hloubkové mokré čištění (tepování) sedadel a koberců",
-        "Detailní čištění kožených sedadel s parní dezinfekcí",
-        "Impregnace a výživa kůže prémiovými balzámy",
-        "Aplikace prémiového sealantu na lak (ochrana 6-12 měsíců)",
-        "Čištění mezidveřních prostor a zádveří",
+        "Pravidelný i generální úklid kanceláří",
+        "Úklid společných prostor bytových domů",
+        "Jednorázové úklidy po stavbě a rekonstrukci",
+        "Flexibilní harmonogram (mimo pracovní dobu)",
+        "Dlouhodobá spolupráce s garancí kvality",
+        "Zpracování cenové nabídky zdarma do 24h",
       ],
+      ctaText: "Vyžádat firemní nabídku",
     },
     {
-      name: "Royal Ceramic",
-      price: "14 990",
-      period: "od",
-      desc: "Maximální možná péče s vícekrokovou korekcí laku a dlouhodobou keramickou ochranou.",
+      icon: <Truck className="w-8 h-8 text-blue-600" />,
+      name: "Doprava",
+      price: "7,-",
+      unit: "Kč / km",
+      desc: "Dopravné pro realizaci služeb kdekoli v Praze a okolí.",
       popular: false,
       features: [
-        "Vše z balíčku Premium Detailing",
-        "Vícekrokové leštění laku (korekce až 90% škrábanců)",
-        "Aplikace certifikované 9H keramické ochrany laku (životnost až 3 roky)",
-        "Keramická ochrana čelního skla a vnějších zrcátek",
-        "Aplikace keramické ochrany na disky kol a třmeny",
-        "Kompletní a bezpečné čištění motorového prostoru",
-        "Dezinfekce interiéru generátorem ozónu",
+        "Sazba počítána z Prahy 10 k vám a zpět",
+        "Přesný příjezd v dohodnutý čas",
+        "Dovoz veškeré techniky a vybavení v ceně",
+        "Transparentní kalkulace předem",
+        "Možnost realizace po celé ČR",
+        "Doprava v rámci vybraných balíčků zdarma",
       ],
+      ctaText: "Spočítat dopravu",
     },
   ];
 
   return (
-    <section id="cenik" className="py-24 md:py-32 bg-zinc-900/20 relative">
+    <section id="cenik" className="py-24 md:py-32 bg-slate-50/50 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Heading */}
         <div className="flex flex-col items-center text-center mb-20">
-          <span className="text-xs uppercase tracking-[0.25em] text-gold-400 font-sans mb-3">
-            Transparentní Ceník
+          <span className="text-xs uppercase tracking-[0.25em] text-blue-600 font-sans mb-3 font-semibold">
+            Ceník a Podmínky
           </span>
-          <h2 className="text-3xl sm:text-5xl font-serif text-zinc-100 tracking-tight leading-tight max-w-2xl">
-            Investujte do kvality, která <br />
-            <span className="text-gold-gradient italic font-medium">je vidět na první pohled</span>
+          <h2 className="text-3xl sm:text-5xl font-serif text-slate-900 tracking-tight leading-tight max-w-2xl">
+            Jasné podmínky, <br />
+            <span className="text-blue-gradient italic font-bold">které se odvíjí od vašich potřeb</span>
           </h2>
-          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold-400 to-transparent mt-6" />
+          <div className="w-24 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-6" />
         </div>
 
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-16">
-          {carPackages.map((pkg, idx) => (
+          {pricingCards.map((pkg, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
@@ -82,39 +83,54 @@ export default function Pricing() {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className={`relative p-8 rounded-sm flex flex-col justify-between transition-all duration-500 border ${
                 pkg.popular
-                  ? "bg-zinc-900/80 border-gold-500 shadow-xl shadow-gold-950/10 lg:-translate-y-4"
-                  : "bg-zinc-950/40 border-zinc-850 hover:border-zinc-700"
+                  ? "bg-white border-blue-500 shadow-lg lg:-translate-y-4"
+                  : "bg-white border-slate-100 hover:border-slate-300 shadow-sm"
               }`}
             >
-              {/* Popular Badge */}
+              {/* Highlight Badge */}
               {pkg.popular && (
-                <div className="absolute top-0 right-1/2 transform translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-gold-gradient rounded-full">
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-950">
-                    Nejoblíbenější
+                <div className="absolute top-0 right-1/2 transform translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-blue-royal rounded-full shadow-md">
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-white">
+                    Nejžádanější
                   </span>
                 </div>
               )}
 
               <div>
-                {/* Header */}
-                <h3 className="font-serif text-2xl text-zinc-100 mb-2">{pkg.name}</h3>
-                <p className="text-xs text-zinc-400 font-light mb-6 min-h-[32px]">{pkg.desc}</p>
+                {/* Icon & Title */}
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-sm bg-blue-50 border border-blue-100 flex items-center justify-center">
+                    {pkg.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl text-slate-900 font-medium">{pkg.name}</h3>
+                  </div>
+                </div>
                 
-                {/* Price */}
-                <div className="flex items-baseline gap-1 mb-8 border-b border-zinc-850 pb-6">
-                  <span className="text-sm text-zinc-500 font-light">{pkg.period}</span>
-                  <span className={`text-4xl font-semibold font-sans tracking-tight ${pkg.popular ? 'text-gold-400' : 'text-zinc-100'}`}>
-                    {pkg.price}
-                  </span>
-                  <span className="text-lg text-zinc-400 font-light">Kč</span>
+                <p className="text-xs text-slate-400 font-light mb-6 min-h-[32px]">{pkg.desc}</p>
+                
+                {/* Price Display */}
+                <div className="flex items-baseline gap-1 mb-8 border-b border-slate-100 pb-6">
+                  {pkg.unit ? (
+                    <>
+                      <span className="text-4xl font-bold font-sans tracking-tight text-blue-600">
+                        {pkg.price}
+                      </span>
+                      <span className="text-lg text-slate-600 font-medium ml-1">{pkg.unit}</span>
+                    </>
+                  ) : (
+                    <span className="text-3xl font-bold font-sans tracking-tight text-slate-800">
+                      {pkg.price}
+                    </span>
+                  )}
                 </div>
 
                 {/* Features */}
                 <ul className="flex flex-col gap-4 mb-8">
                   {pkg.features.map((feat, fIdx) => (
                     <li key={fIdx} className="flex items-start gap-3">
-                      <Check className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-zinc-300 font-light leading-relaxed">{feat}</span>
+                      <Check className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-slate-650 font-light leading-relaxed">{feat}</span>
                     </li>
                   ))}
                 </ul>
@@ -125,43 +141,43 @@ export default function Pricing() {
                 href="#kontakt"
                 className={`w-full py-4 rounded-sm text-center text-xs uppercase tracking-widest font-semibold transition-all duration-300 ${
                   pkg.popular
-                    ? "bg-gold-gradient text-zinc-950 hover:brightness-110 shadow-md shadow-gold-500/10"
-                    : "bg-zinc-900 text-zinc-200 border border-zinc-800 hover:border-gold-500/40 hover:text-gold-300"
+                    ? "bg-blue-royal text-white hover:bg-blue-700 shadow-md shadow-blue-500/10"
+                    : "bg-slate-50 text-slate-700 border border-slate-100 hover:border-blue-500/30 hover:text-blue-600"
                 }`}
               >
-                Poptat balíček
+                {pkg.ctaText}
               </a>
             </motion.div>
           ))}
         </div>
 
-        {/* Home/Office Cleaning Notice */}
+        {/* Informative Callout */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="p-8 bg-zinc-950/60 border border-zinc-850 rounded-sm flex flex-col md:flex-row items-center md:items-start justify-between gap-6 hover:border-gold-500/20 transition-colors"
+          className="p-8 bg-white border border-slate-150 rounded-sm flex flex-col md:flex-row items-center md:items-start justify-between gap-6 hover:border-blue-500/20 transition-colors shadow-sm"
         >
           <div className="flex gap-4 items-start">
-            <div className="w-12 h-12 rounded-sm bg-gold-950/20 border border-gold-500/10 flex items-center justify-center flex-shrink-0 mt-1">
-              <Info className="w-5 h-5 text-gold-400" />
+            <div className="w-12 h-12 rounded-sm bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+              <Info className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <h3 className="font-serif text-xl text-zinc-200 mb-2">
-                Individuální úklid rezidencí a komerčních prostor
+              <h3 className="font-serif text-xl text-slate-800 mb-2 font-medium">
+                Doplňující informace k ceníku
               </h3>
-              <p className="text-sm text-zinc-400 font-light leading-relaxed max-w-2xl">
-                Cenu generálních a pravidelných úklidů rodinných domů, bytů či kanceláří stanovujeme individuálně na základě rozlohy (m²), stavu znečištění a specifických požadavků klienta. Nabízíme bezplatnou osobní prohlídku a kalkulaci na míru.
+              <p className="text-sm text-slate-500 font-light leading-relaxed max-w-2xl">
+                Cena každé zakázky se odvíjí především od velikosti objektu, celkové plochy v m² a specifického znečištění. Konečnou cenu stanovujeme vždy po dohodě s vámi před zahájením prací. Doprava je účtována transparentně ve výši <strong>7,- Kč / km</strong>.
               </p>
             </div>
           </div>
           <div className="flex-shrink-0 w-full md:w-auto">
             <a
               href="#kontakt"
-              className="block w-full md:w-auto px-6 py-4 bg-transparent border border-gold-400/40 hover:border-gold-400 rounded-sm text-center text-xs uppercase tracking-widest text-gold-400 hover:bg-gold-950/20 transition-all font-semibold"
+              className="block w-full md:w-auto px-6 py-4 bg-transparent border border-blue-600/30 hover:border-blue-600 rounded-sm text-center text-xs uppercase tracking-widest text-blue-600 hover:bg-blue-50 transition-all font-bold"
             >
-              Kalkulace na míru
+              Kalkulace zdarma
             </a>
           </div>
         </motion.div>

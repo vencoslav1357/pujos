@@ -37,17 +37,20 @@ export default function Navbar() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
           scrolled
-            ? "py-4 bg-zinc-950/80 backdrop-blur-md border-gold-500/10 shadow-lg shadow-black/40"
+            ? "py-4 bg-white/95 backdrop-blur-md border-slate-100 shadow-sm"
             : "py-6 bg-transparent border-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 group">
-            <span className="font-serif text-2xl font-bold tracking-widest text-gold-400 group-hover:text-gold-300 transition-colors">
-              JOSEF PUFR
+            <span className="font-serif text-2xl font-bold tracking-widest text-slate-900 group-hover:text-blue-600 transition-colors">
+              J. PUFR
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-gold-400 group-hover:bg-gold-300 transition-colors self-end mb-2"></span>
+            <span className="text-[10px] uppercase tracking-wider text-slate-400 font-sans self-end mb-1.5 hidden sm:inline-block">
+              úklidové služby
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-600 group-hover:bg-blue-500 transition-colors self-end mb-2"></span>
           </a>
 
           {/* Desktop Nav Links */}
@@ -56,28 +59,28 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className="relative text-sm tracking-widest uppercase text-zinc-400 hover:text-gold-200 transition-colors duration-300 py-2 group"
+                className="relative text-sm tracking-widest uppercase text-slate-600 hover:text-blue-600 transition-colors duration-300 py-2 group font-medium"
               >
                 {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gold-400 transition-all duration-300 group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>
 
           {/* CTA & Contact Buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-6">
             <a
               href="tel:+420777777777"
-              className="flex items-center gap-2 text-sm text-zinc-400 hover:text-gold-400 transition-colors duration-300 font-medium"
+              className="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600 transition-colors duration-300 font-semibold"
             >
-              <Phone className="w-4 h-4 text-gold-400" />
+              <Phone className="w-4 h-4 text-blue-600" />
               <span>+420 777 777 777</span>
             </a>
             <a
               href="#kontakt"
-              className="relative overflow-hidden px-6 py-2.5 bg-transparent border border-gold-400/40 rounded-sm text-sm uppercase tracking-widest text-gold-400 hover:text-zinc-950 transition-colors duration-500 group"
+              className="relative overflow-hidden px-6 py-2.5 bg-transparent border border-blue-600/30 rounded-sm text-sm uppercase tracking-widest text-blue-600 hover:text-white transition-colors duration-500 group font-semibold"
             >
-              <span className="absolute inset-0 w-full h-full bg-gold-gradient scale-x-0 origin-left transition-transform duration-500 ease-out group-hover:scale-x-100 -z-10" />
+              <span className="absolute inset-0 w-full h-full bg-blue-royal scale-x-0 origin-left transition-transform duration-500 ease-out group-hover:scale-x-100 -z-10" />
               Nezávazná poptávka
             </a>
           </div>
@@ -86,13 +89,13 @@ export default function Navbar() {
           <div className="flex md:hidden items-center gap-4">
             <a
               href="#kontakt"
-              className="px-4 py-2 border border-gold-400/40 rounded-sm text-xs uppercase tracking-wider text-gold-400 hover:bg-gold-400/10 transition-colors"
+              className="px-4 py-2 border border-blue-600/30 rounded-sm text-xs uppercase tracking-wider text-blue-600 hover:bg-blue-50 transition-colors font-semibold"
             >
               Poptávka
             </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-zinc-400 hover:text-gold-400 transition-colors"
+              className="text-slate-700 hover:text-blue-600 transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -109,15 +112,15 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-zinc-950 pt-28 px-8 flex flex-col gap-6 md:hidden"
+            className="fixed inset-0 z-40 bg-white pt-28 px-8 flex flex-col gap-6 md:hidden shadow-xl"
           >
-            <div className="flex flex-col gap-6 border-b border-zinc-850 pb-8">
+            <div className="flex flex-col gap-6 border-b border-slate-100 pb-8">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-xl font-serif tracking-widest text-zinc-300 hover:text-gold-400 transition-colors"
+                  className="text-xl font-serif tracking-widest text-slate-800 hover:text-blue-600 transition-colors"
                 >
                   {link.name}
                 </a>
@@ -126,15 +129,15 @@ export default function Navbar() {
             <div className="flex flex-col gap-4 mt-4">
               <a
                 href="tel:+420777777777"
-                className="flex items-center gap-3 text-zinc-400 hover:text-gold-400 transition-colors text-lg"
+                className="flex items-center gap-3 text-slate-700 hover:text-blue-600 transition-colors text-lg font-semibold"
               >
-                <Phone className="w-5 h-5 text-gold-400" />
+                <Phone className="w-5 h-5 text-blue-600" />
                 <span>+420 777 777 777</span>
               </a>
               <a
                 href="#kontakt"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-4 bg-gold-gradient rounded-sm text-sm uppercase tracking-widest font-semibold text-zinc-950 hover:brightness-110 transition-all shadow-md shadow-gold-500/10"
+                className="w-full text-center py-4 bg-blue-royal rounded-sm text-sm uppercase tracking-widest font-semibold text-white hover:bg-blue-700 transition-all shadow-md shadow-blue-500/10"
               >
                 Nezávazná poptávka
               </a>
