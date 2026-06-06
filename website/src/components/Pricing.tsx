@@ -137,16 +137,19 @@ export default function Pricing() {
               </div>
 
               {/* Action Button */}
-              <a
-                href="#kontakt"
-                className={`w-full py-4 rounded-sm text-center text-xs uppercase tracking-widest font-semibold transition-all duration-300 ${
+              <button
+                onClick={() => {
+                  const service = pkg.name.includes("Rezidenční") ? "residence-cleaning" : "commercial-cleaning";
+                  window.dispatchEvent(new CustomEvent("select-service-type", { detail: service }));
+                }}
+                className={`w-full py-4 rounded-sm text-center text-xs uppercase tracking-widest font-semibold transition-all duration-300 cursor-pointer ${
                   pkg.popular
                     ? "bg-blue-royal text-white hover:bg-blue-700 shadow-md shadow-blue-500/10"
                     : "bg-slate-50 text-slate-700 border border-slate-100 hover:border-blue-500/30 hover:text-blue-600"
                 }`}
               >
                 {pkg.ctaText}
-              </a>
+              </button>
             </motion.div>
           ))}
         </div>

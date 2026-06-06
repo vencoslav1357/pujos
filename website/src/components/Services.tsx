@@ -14,6 +14,10 @@ import {
 } from "lucide-react";
 
 export default function Services() {
+  const handleSelectService = (type: "residence-cleaning" | "commercial-cleaning") => {
+    window.dispatchEvent(new CustomEvent("select-service-type", { detail: type }));
+  };
+
   const residentialServices = [
     {
       icon: <Home className="w-5 h-5 text-blue-600" />,
@@ -106,7 +110,10 @@ export default function Services() {
             className="flex flex-col"
           >
             {/* Banner Card */}
-            <div className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-slate-200 hover:border-blue-500/30 transition-all duration-500 shadow-sm">
+            <div 
+              onClick={() => handleSelectService("residence-cleaning")}
+              className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-slate-200 hover:border-blue-500/30 hover:shadow-md transition-all duration-500 shadow-sm cursor-pointer"
+            >
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
                 style={{ backgroundImage: "url('/home_clean_card.png')" }}
@@ -175,7 +182,10 @@ export default function Services() {
             className="flex flex-col"
           >
             {/* Banner Card */}
-            <div className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-slate-200 hover:border-blue-500/30 transition-all duration-500 shadow-sm">
+            <div 
+              onClick={() => handleSelectService("commercial-cleaning")}
+              className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-slate-200 hover:border-blue-500/30 hover:shadow-md transition-all duration-500 shadow-sm cursor-pointer"
+            >
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
                 style={{ backgroundImage: "url('/office_clean_card.png')" }}
