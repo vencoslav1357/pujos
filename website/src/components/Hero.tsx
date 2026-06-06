@@ -4,7 +4,11 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-export default function Hero() {
+interface HeroProps {
+  isLoading?: boolean;
+}
+
+export default function Hero({ isLoading = false }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Custom scroll tracking for parallax effect
@@ -50,7 +54,7 @@ export default function Hero() {
           {/* Accent Label */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={isLoading ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 rounded-full mb-6"
           >
@@ -63,7 +67,7 @@ export default function Hero() {
           {/* Main Title */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={isLoading ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif tracking-tight leading-[1.15] text-slate-900 mb-6"
           >
@@ -76,7 +80,7 @@ export default function Hero() {
           {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={isLoading ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.6 }}
             className="text-slate-900 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-xl mb-10 font-sans"
           >
@@ -86,7 +90,7 @@ export default function Hero() {
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={isLoading ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
           >

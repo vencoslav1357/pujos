@@ -5,7 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const words = ["Čistota", "Preciznost", "Spolehlivost", "Harmonie"];
 
-export default function Preloader() {
+interface PreloaderProps {
+  onComplete?: () => void;
+}
+
+export default function Preloader({ onComplete }: PreloaderProps) {
   const [index, setIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(true);
@@ -30,7 +34,10 @@ export default function Preloader() {
     const updateProgress = () => {
       if (currentProgress >= 100) {
         setProgress(100);
-        timeoutId = setTimeout(() => setActive(false), 400);
+        timeoutId = setTimeout(() => {
+          setActive(false);
+          if (onComplete) onComplete();
+        }, 400);
         return;
       }
 

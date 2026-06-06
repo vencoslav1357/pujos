@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 
-export default function Navbar() {
+interface NavbarProps {
+  isLoading?: boolean;
+}
+
+export default function Navbar({ isLoading = false }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -33,7 +37,7 @@ export default function Navbar() {
     <>
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        animate={isLoading ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
           scrolled

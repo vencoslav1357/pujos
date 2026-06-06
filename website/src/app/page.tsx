@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
@@ -11,22 +14,24 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Preloader from "@/components/Preloader";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <div className="relative min-h-screen bg-white text-slate-900 flex flex-col font-sans">
       {/* Intro Preloader */}
-      <Preloader />
+      <Preloader onComplete={() => setIsLoading(false)} />
 
       {/* Premium smooth scroll & custom cursor */}
       <SmoothScroll />
       <CustomCursor />
 
       {/* Floating Header */}
-      <Navbar />
+      <Navbar isLoading={isLoading} />
 
       {/* Main Content Sections */}
       <main className="flex-grow">
         {/* Immersive Parallax Hero Section */}
-        <Hero />
+        <Hero isLoading={isLoading} />
 
         {/* Services Split Section */}
         <Services />

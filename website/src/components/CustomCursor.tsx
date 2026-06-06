@@ -69,9 +69,9 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Smooth Lagging Minimalist Follower Ring */}
+      {/* Smooth Lagging Minimalist Follower Glow (Cloud/Shadow effect) */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-50 border border-blue-royal/25 bg-transparent"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-40 bg-blue-royal/10 blur-xl md:blur-2xl"
         style={{
           x: ringX,
           y: ringY,
@@ -79,12 +79,11 @@ export default function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          width: isHovering ? 32 : 16,
-          height: isHovering ? 32 : 16,
-          backgroundColor: isHovering ? "rgba(37, 99, 235, 0.06)" : "rgba(37, 99, 235, 0)",
-          borderColor: isHovering ? "rgba(37, 99, 235, 0.5)" : "rgba(37, 99, 235, 0.25)",
+          width: isHovering ? 96 : 48,
+          height: isHovering ? 96 : 48,
+          opacity: isHovering ? 0.85 : 0.45,
         }}
-        transition={{ type: "spring", stiffness: 400, damping: 28 }}
+        transition={{ type: "spring", stiffness: 350, damping: 32 }}
       />
     </>
   );
