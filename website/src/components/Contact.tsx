@@ -14,12 +14,14 @@ import {
   Building, 
   Home, 
   Layers, 
-  Map, 
   Loader2,
   AlertCircle,
   Link2,
-  Link2Off
+  Link2Off,
+  Download
 } from "lucide-react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -51,6 +53,9 @@ export default function Contact() {
     email: "",
     message: "",
   });
+
+  // PDF Generation loading state
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   // Sync selected service type from click events in other components
   useEffect(() => {
@@ -204,6 +209,43 @@ export default function Contact() {
 
   const totalCalculatedMin = Math.round(baseCleaningAdjusted + windowsCost + carpetCost + upholsteryCost + constructionCost + transportCost);
   const totalCalculatedMax = Math.round(totalCalculatedMin * 1.25);
+
+  // PDF Quote Download Handler
+  const handleDownloadPDF = async () => {
+    const template = document.getElementById("pdf-quote-template");
+    if (!template) return;
+
+    setIsGeneratingPDF(true);
+
+    try {
+      // Unhide template momentarily for rendering
+      template.style.display = "block";
+
+      const canvas = await html2canvas(template, {
+        scale: 2.2, // Ultra-sharp print quality
+        useCORS: true,
+        logging: false,
+        backgroundColor: "#ffffff",
+      });
+
+      // Hide again
+      template.style.display = "none";
+
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      
+      const pdfWidth = 210;
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`cenova_nabidka_j_pufr_${serviceType}.pdf`);
+    } catch (err) {
+      console.error("Failed to generate PDF:", err);
+      alert("Nepodařilo se vygenerovat PDF. Zkuste to prosím znovu.");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -633,9 +675,24 @@ export default function Contact() {
                     {totalCalculatedMin.toLocaleString("cs-CZ")} – {totalCalculatedMax.toLocaleString("cs-CZ")} Kč
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 font-sans leading-relaxed mt-2">
+                <div className="text-[10px] text-slate-400 font-sans leading-relaxed mt-2 border-b border-slate-100 pb-3">
                   * Cena se odvíjí od reálné míry znečištění. Závazné nacenění vám potvrdíme po odeslání.
                 </div>
+                
+                {/* Download PDF button */}
+                <button
+                  type="button"
+                  onClick={handleDownloadPDF}
+                  disabled={isGeneratingPDF}
+                  className="mt-3 w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 disabled:opacity-50 border border-slate-250 rounded-sm font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                >
+                  {isGeneratingPDF ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin flex-shrink-0" />
+                  ) : (
+                    <Download className="w-3.5 h-3.5 flex-shrink-0 text-blue-600" />
+                  )}
+                  <span>Stáhnout PDF nabídku</span>
+                </button>
               </div>
             </div>
           </div>
@@ -808,30 +865,170 @@ export default function Contact() {
         </div>
 
         {/* QUICK CONTACT INFO ROW AT THE BOTTOM */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto w-full font-sans">
           <a href="tel:+420777777777" className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4 group hover:border-blue-500/35 transition-all duration-300">
             <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center group-hover:bg-blue-50 group-hover:border-blue-500 transition-all"><Phone className="w-4 h-4 text-blue-600" /></span>
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block font-sans">Zavolejte nám</span>
-              <span className="text-sm font-semibold text-slate-750 font-sans group-hover:text-blue-600 transition-colors">+420 777 777 777</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Zavolejte nám</span>
+              <span className="text-sm font-semibold text-slate-750 group-hover:text-blue-600 transition-colors">+420 777 777 777</span>
             </div>
           </a>
           <a href="mailto:info@jpufr.cz" className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4 group hover:border-blue-500/35 transition-all duration-300">
             <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center group-hover:bg-blue-50 group-hover:border-blue-500 transition-all"><Mail className="w-4 h-4 text-blue-600" /></span>
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block font-sans">Napište nám</span>
-              <span className="text-sm font-semibold text-slate-750 font-sans group-hover:text-blue-600 transition-colors">info@jpufr.cz</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Napište nám</span>
+              <span className="text-sm font-semibold text-slate-750 group-hover:text-blue-600 transition-colors">info@jpufr.cz</span>
             </div>
           </a>
           <div className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4">
             <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center"><Clock className="w-4 h-4 text-blue-600" /></span>
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block font-sans">Provozní doba</span>
-              <span className="text-sm font-semibold text-slate-750 font-sans">Po - So: 8:00 - 18:00</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Provozní doba</span>
+              <span className="text-sm font-semibold text-slate-750">Po - So: 8:00 - 18:00</span>
             </div>
           </div>
         </div>
 
+      </div>
+
+      {/* HIDDEN PREMIUM PDF QUOTATION A4 TEMPLATE */}
+      <div 
+        id="pdf-quote-template" 
+        style={{ 
+          display: "none", 
+          position: "absolute", 
+          left: "-9999px", 
+          top: "-9999px", 
+          width: "794px", 
+          padding: "50px 60px",
+          backgroundColor: "#ffffff",
+          fontFamily: "sans-serif",
+          color: "#1e293b",
+          boxSizing: "border-box"
+        }}
+      >
+        {/* PDF Header */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", borderBottom: "2px solid #e2e8f0", paddingBottom: "20px", marginBottom: "30px" }}>
+          <div>
+            <h1 style={{ fontSize: "28px", fontFamily: "serif", fontWeight: "bold", color: "#0f172a", margin: "0 0 5px 0", letterSpacing: "1px" }}>J. PUFR</h1>
+            <span style={{ fontSize: "12px", textTransform: "uppercase", letterSpacing: "2px", color: "#2563eb", fontWeight: "bold" }}>úklidové služby</span>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <h2 style={{ fontSize: "16px", color: "#2563eb", fontWeight: "bold", margin: "0 0 5px 0" }}>ORIENTAČNÍ CENOVÁ NABÍDKA</h2>
+            <span style={{ fontSize: "11px", color: "#64748b" }}>
+              Číslo: CP-{new Date().getFullYear()}-{Math.floor(1000 + Math.random() * 9000)}<br />
+              Datum: {new Date().toLocaleDateString("cs-CZ")}
+            </span>
+          </div>
+        </div>
+
+        {/* Supplier & Client Address blocks */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginBottom: "40px" }}>
+          <div style={{ backgroundColor: "#f8fafc", padding: "20px", border: "1px solid #f1f5f9", borderRadius: "2px" }}>
+            <h3 style={{ fontSize: "11px", textTransform: "uppercase", color: "#64748b", fontWeight: "bold", margin: "0 0 10px 0", borderBottom: "1px solid #e2e8f0", paddingBottom: "5px" }}>POSKYTOVATEL SLUŽEB</h3>
+            <p style={{ fontSize: "13px", fontWeight: "bold", color: "#0f172a", margin: "0 0 5px 0" }}>J. Pufr úklidové služby</p>
+            <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 3px 0" }}>Průmyslová 1234, 102 00 Praha 10</p>
+            <p style={{ fontSize: "12px", color: "#334155", margin: "0" }}>E-mail: info@jpufr.cz | Tel: +420 777 777 777</p>
+          </div>
+          <div style={{ backgroundColor: "#f8fafc", padding: "20px", border: "1px solid #f1f5f9", borderRadius: "2px" }}>
+            <h3 style={{ fontSize: "11px", textTransform: "uppercase", color: "#64748b", fontWeight: "bold", margin: "0 0 10px 0", borderBottom: "1px solid #e2e8f0", paddingBottom: "5px" }}>SPECIFIKACE POPTÁVKY</h3>
+            <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 5px 0" }}>
+              <strong>Typ úklidu:</strong> {serviceType === "residence" ? "Rezidenční úklid (domácnost)" : "Komerční úklid (firma)"}
+            </p>
+            <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 5px 0" }}>
+              <strong>Celková plocha:</strong> {area} m²
+            </p>
+            <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 5px 0" }}>
+              <strong>Frekvence:</strong> {frequency}
+            </p>
+            <p style={{ fontSize: "12px", color: "#334155", margin: "0" }}>
+              <strong>Místo realizace:</strong> {address || "Neuvedeno"}
+            </p>
+          </div>
+        </div>
+
+        {/* Pricing Items Table */}
+        <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "40px", fontSize: "12px" }}>
+          <thead>
+            <tr style={{ backgroundColor: "#f8fafc", borderBottom: "2px solid #cbd5e1" }}>
+              <th style={{ textAlign: "left", padding: "12px 10px", fontWeight: "bold", color: "#475569" }}>POLOŽKA / ZADÁNÍ</th>
+              <th style={{ textAlign: "left", padding: "12px 10px", fontWeight: "bold", color: "#475569" }}>VÝPOČET / POPIS</th>
+              <th style={{ textAlign: "right", padding: "12px 10px", fontWeight: "bold", color: "#475569" }}>CENA (orientační)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
+              <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Základní úklid prostor</td>
+              <td style={{ padding: "12px 10px", color: "#64748b" }}>{area} m² × {basePricePerSqm} Kč/m²</td>
+              <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{rawBaseCleaning.toLocaleString("cs-CZ")} Kč</td>
+            </tr>
+            {frequencyMultiplier !== 1.0 && (
+              <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
+                <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Frekvenční koeficient</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>{frequencyLabel}</td>
+                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold", color: frequencyDifference < 0 ? "#10b981" : "#d97706" }}>
+                  {frequencyDifference > 0 ? "+" : ""}{frequencyDifference.toLocaleString("cs-CZ")} Kč
+                </td>
+              </tr>
+            )}
+            {distance !== undefined && (
+              <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
+                <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Dopravné na místo realizace</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>Dojezd {distance} km × 2 (tam i zpět) × 7 Kč/km</td>
+                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{transportCost.toLocaleString("cs-CZ")} Kč</td>
+              </tr>
+            )}
+            {extras.windows && (
+              <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
+                <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Mytí oken a prosklených ploch</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>Paušál + okna dle podlahové plochy</td>
+                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{windowsCost.toLocaleString("cs-CZ")} Kč</td>
+              </tr>
+            )}
+            {extras.carpet && (
+              <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
+                <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Hloubkové tepování koberců</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>Plocha {area} m² × 15 Kč/m²</td>
+                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{carpetCost.toLocaleString("cs-CZ")} Kč</td>
+              </tr>
+            )}
+            {extras.upholstery && (
+              <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
+                <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Čištění čalounění a matrací</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>Paušální sazba za tepování čalounění</td>
+                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{upholsteryCost.toLocaleString("cs-CZ")} Kč</td>
+              </tr>
+            )}
+            {extras.construction && (
+              <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
+                <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Úklid po stavbě a malování</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>Čištění post-stavebního prachu ({area} m² × 25 Kč/m²)</td>
+                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{constructionCost.toLocaleString("cs-CZ")} Kč</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+        {/* Pricing Summary box */}
+        <div style={{ border: "2px solid #bfdbfe", backgroundColor: "#eff6ff", padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "50px", borderRadius: "2px" }}>
+          <div>
+            <span style={{ fontSize: "10px", color: "#2563eb", textTransform: "uppercase", fontWeight: "bold", letterSpacing: "1px" }}>Celková orientační cena (Rozsah)</span>
+            <h4 style={{ fontSize: "24px", color: "#1e3a8a", margin: "5px 0 0 0", fontWeight: "bold" }}>
+              {totalCalculatedMin.toLocaleString("cs-CZ")} – {totalCalculatedMax.toLocaleString("cs-CZ")} Kč
+            </h4>
+          </div>
+          <div style={{ textAlign: "right", fontSize: "11px", color: "#475569", maxWidth: "250px" }}>
+            * Uvedené ceny jsou pouze orientační. Konečná cena bude potvrzena po osobní prohlídce či detailní specifikaci objektu.
+          </div>
+        </div>
+
+        {/* PDF Footer contacts */}
+        <div style={{ borderTop: "1px solid #cbd5e1", paddingTop: "20px", fontSize: "11px", color: "#64748b", textAlign: "center", lineHeight: "1.6" }}>
+          <p style={{ margin: "0 0 5px 0" }}>Děkujeme za Váš zájem a těšíme se na případnou spolupráci.</p>
+          <p style={{ margin: "0", fontWeight: "bold", color: "#475569" }}>
+            J. Pufr úklidové služby | +420 777 777 777 | info@jpufr.cz | www.jpufr.cz
+          </p>
+        </div>
       </div>
     </section>
   );
