@@ -14,19 +14,19 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(true);
 
-  // Cycle through slogans
+  // Cycle through slogans (fast-paced)
   useEffect(() => {
     if (index === words.length - 1) return;
     const timeout = setTimeout(
       () => {
         setIndex(index + 1);
       },
-      index === 0 ? 900 : 650
+      index === 0 ? 300 : 220
     );
     return () => clearTimeout(timeout);
   }, [index]);
 
-  // Non-linear, organic loading simulation
+  // Non-linear, organic and SNAPPY loading simulation (completes in ~800ms)
   useEffect(() => {
     let currentProgress = 0;
     let timeoutId: NodeJS.Timeout;
@@ -37,41 +37,38 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         timeoutId = setTimeout(() => {
           setActive(false);
           if (onComplete) onComplete();
-        }, 400);
+        }, 200);
         return;
       }
 
-      // Random increments based on current progress
+      // Snappy progress steps
       const remaining = 100 - currentProgress;
       let increment = 1;
 
-      if (remaining > 75) {
-        increment = Math.floor(Math.random() * 12) + 4; // Fast start: +4 to +15
-      } else if (remaining > 35) {
-        increment = Math.floor(Math.random() * 8) + 2;  // Medium progress: +2 to +9
+      if (remaining > 60) {
+        increment = Math.floor(Math.random() * 15) + 12; // Fast start: +12 to +26
+      } else if (remaining > 20) {
+        increment = Math.floor(Math.random() * 8) + 6;   // Medium: +6 to +13
       } else {
-        increment = Math.floor(Math.random() * 3) + 1;  // Slow finish: +1 to +3
+        increment = Math.floor(Math.random() * 3) + 2;   // Finish: +2 to +4
       }
 
       currentProgress = Math.min(100, currentProgress + increment);
       setProgress(currentProgress);
 
-      // Random delay between ticks to feel natural (non-constant updates)
-      let nextDelay = Math.floor(Math.random() * 120) + 35; // 35ms to 155ms
+      // Fast tick delay
+      let nextDelay = Math.floor(Math.random() * 40) + 15; // 15ms to 55ms
 
-      // Introduce random organic stalls (asset loading simulation)
-      if (currentProgress > 30 && currentProgress < 40 && Math.random() > 0.45) {
-        nextDelay = Math.floor(Math.random() * 250) + 200; // pause for 200-450ms
-      }
-      if (currentProgress > 72 && currentProgress < 82 && Math.random() > 0.45) {
-        nextDelay = Math.floor(Math.random() * 350) + 250; // pause for 250-600ms
+      // Extremely brief organic stall (asset loading simulation)
+      if (currentProgress > 45 && currentProgress < 65 && Math.random() > 0.5) {
+        nextDelay = Math.floor(Math.random() * 100) + 100; // tiny pause of 100-200ms
       }
 
       timeoutId = setTimeout(updateProgress, nextDelay);
     };
 
-    // Initial delay before start
-    timeoutId = setTimeout(updateProgress, 150);
+    // Tiny initial delay
+    timeoutId = setTimeout(updateProgress, 100);
 
     return () => clearTimeout(timeoutId);
   }, []);
