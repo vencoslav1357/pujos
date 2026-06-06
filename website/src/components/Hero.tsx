@@ -47,18 +47,7 @@ export default function Hero() {
           style={{ y: textY, opacity }}
           className="max-w-3xl flex flex-col items-start text-left"
         >
-          {/* Accent Label */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 rounded-full mb-6"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-            <span className="text-xs uppercase tracking-widest text-blue-700 font-semibold font-sans">
-              J. PUFR a spol.
-            </span>
-          </motion.div>
+
 
           {/* Main Title */}
           <motion.h1
