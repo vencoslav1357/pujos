@@ -119,10 +119,17 @@ export default function Footer() {
           <p className="text-xs text-slate-400 font-light font-sans text-center sm:text-left">
             &copy; {currentYear} J. Pufr úklidové služby. Všechna práva vyhrazena.
           </p>
-          <p className="text-xs text-slate-400 font-light font-sans flex items-center gap-1">
-            <span>Navrhnuto s důrazem na</span>
-            <span className="text-blue-600 font-semibold">spolehlivost</span>
-          </p>
+          <div className="flex flex-col items-center sm:items-end gap-1">
+            <p className="text-xs text-slate-400 font-light font-sans flex items-center gap-1">
+              <span>Navrhnuto s důrazem na</span>
+              <span className="text-blue-600 font-semibold">spolehlivost</span>
+            </p>
+            <p className="text-[11px] text-slate-400 font-light font-sans flex items-center gap-1">
+              <span>Made with</span>
+              <span className="text-rose-500">♥</span>
+              <span>by Jan Veselý</span>
+            </p>
+          </div>
         </div>
 
       </div>
