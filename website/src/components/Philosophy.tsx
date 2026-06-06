@@ -66,7 +66,7 @@ export default function Philosophy() {
           <div className="lg:col-span-5">
             <ScrollReveal
               text="Věříme, že čistota je vizitkou úspěchu a harmonie. Ať už jde o reprezentativní firemní prostory nebo o vaši rodinnou rezidenci, ke každému úkolu přistupujeme jako k řemeslu vyžadujícímu stoprocentní soustředění a cit."
-              className="text-slate-500 font-light leading-relaxed text-sm md:text-base"
+              className="text-slate-750 font-normal leading-relaxed text-sm md:text-base"
             />
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function Philosophy() {
                 </h3>
                 
                 {/* Pillar Description */}
-                <p className="text-sm text-slate-500 font-light leading-relaxed">
+                <p className="text-sm text-slate-700 font-normal leading-relaxed">
                   {pillar.desc}
                 </p>
               </div>

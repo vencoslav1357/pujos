@@ -57,7 +57,7 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="cenik" className="py-24 md:py-32 bg-slate-50/50 relative">
+    <section id="cenik" className="py-24 md:py-32 bg-gradient-to-b from-white via-blue-50/60 to-white relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Heading */}
@@ -107,7 +107,7 @@ export default function Pricing() {
                   </div>
                 </div>
                 
-                <p className="text-xs text-slate-400 font-light mb-6 min-h-[32px]">{pkg.desc}</p>
+                <p className="text-xs text-slate-750 font-normal mb-6 min-h-[32px]">{pkg.desc}</p>
                 
                 {/* Price Display */}
                 <div className="flex items-baseline gap-1 mb-8 border-b border-slate-100 pb-6">
@@ -130,7 +130,7 @@ export default function Pricing() {
                   {pkg.features.map((feat, fIdx) => (
                     <li key={fIdx} className="flex items-start gap-3">
                       <Check className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-slate-650 font-light leading-relaxed">{feat}</span>
+                      <span className="text-sm text-slate-800 font-normal leading-relaxed">{feat}</span>
                     </li>
                   ))}
                 </ul>
@@ -167,7 +167,7 @@ export default function Pricing() {
               <h3 className="font-serif text-xl text-slate-800 mb-2 font-medium">
                 Doplňující informace k ceníku
               </h3>
-              <p className="text-sm text-slate-500 font-light leading-relaxed max-w-2xl">
+              <p className="text-sm text-slate-750 font-normal leading-relaxed max-w-2xl">
                 Cena každé zakázky se odvíjí především od velikosti objektu, celkové plochy v m² a specifického znečištění. Konečnou cenu stanovujeme vždy po dohodě s vámi před zahájením prací. Doprava je účtována transparentně ve výši <strong>7,- Kč / km</strong>.
               </p>
             </div>

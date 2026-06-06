@@ -23,7 +23,7 @@ export default function Footer() {
               </span>
               <span className="h-1.5 w-1.5 rounded-full bg-blue-600 group-hover:bg-blue-500 transition-colors self-end mb-2"></span>
             </a>
-            <p className="text-slate-500 font-light text-sm leading-relaxed mb-6 max-w-sm">
+            <p className="text-slate-700 font-normal text-sm leading-relaxed mb-6 max-w-sm">
               Špičkový úklid komerčních a rezidenčních prostor. Zajišťujeme precizní pravidelnou i generální údržbu kanceláří, domů a mytí oken s důrazem na spolehlivost a preciznost.
             </p>
             {/* Social icons */}
@@ -65,7 +65,7 @@ export default function Footer() {
                 <a
                   key={link}
                   href={`#${link === "Úvod" ? "" : link.toLowerCase().replace("naše ", "").replace("ú", "u").replace("ě", "e").replace("í", "i")}`}
-                  className="text-sm text-slate-500 hover:text-blue-600 transition-colors w-fit font-light"
+                  className="text-sm text-slate-600 hover:text-blue-600 transition-colors w-fit font-normal"
                 >
                   {link}
                 </a>
@@ -78,7 +78,7 @@ export default function Footer() {
             <h4 className="text-xs uppercase tracking-widest text-blue-600 font-semibold mb-6">
               Naše Služby
             </h4>
-            <div className="flex flex-col gap-4 text-sm text-slate-500 font-light">
+            <div className="flex flex-col gap-4 text-sm text-slate-600 font-normal">
               <span className="hover:text-blue-600 transition-colors cursor-pointer">Pravidelný úklid kanceláří</span>
               <span className="hover:text-blue-600 transition-colors cursor-pointer">Generální úklid rezidencí</span>
               <span className="hover:text-blue-600 transition-colors cursor-pointer">Mytí oken a prosklených ploch</span>
@@ -94,19 +94,19 @@ export default function Footer() {
             </h4>
             <a
               href="tel:+420777777777"
-              className="flex items-start gap-3 group text-sm text-slate-500 hover:text-blue-600 transition-colors font-light"
+              className="flex items-start gap-3 group text-sm text-slate-600 hover:text-blue-600 transition-colors font-normal"
             >
               <Phone className="w-4 h-4 text-blue-600 mt-0.5" />
               <span>+420 777 777 777</span>
             </a>
             <a
               href="mailto:info@jpufr.cz"
-              className="flex items-start gap-3 group text-sm text-slate-500 hover:text-blue-600 transition-colors font-light"
+              className="flex items-start gap-3 group text-sm text-slate-600 hover:text-blue-600 transition-colors font-normal"
             >
               <Mail className="w-4 h-4 text-blue-600 mt-0.5" />
               <span>info@jpufr.cz</span>
             </a>
-            <div className="flex items-start gap-3 text-sm text-slate-500 font-light">
+            <div className="flex items-start gap-3 text-sm text-slate-600 font-normal">
               <MapPin className="w-4 h-4 text-blue-600 mt-0.5" />
               <span>Průmyslová 1234, Praha 10</span>
             </div>

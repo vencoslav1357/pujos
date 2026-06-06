@@ -50,7 +50,7 @@ export default function Contact() {
                 Napište nám a <br />
                 <span className="text-blue-gradient italic font-bold">získejte cenovou nabídku</span>
               </h2>
-              <p className="text-slate-500 font-light leading-relaxed mb-12 max-w-md">
+              <p className="text-slate-750 font-normal leading-relaxed mb-12 max-w-md">
                 Máte zájem o pravidelný či generální úklid vašich komerčních prostor, nebo potřebujete zajistit precizní péči o domácnost? Vyplňte formulář a my se vám ozveme zpět s nezávaznou nabídkou do 24 hodin.
               </p>
 
@@ -245,7 +245,7 @@ export default function Contact() {
                     <h3 className="font-serif text-2xl text-slate-900 mb-3 font-semibold">
                       Poptávka byla odeslána
                     </h3>
-                    <p className="text-sm text-slate-500 font-light max-w-sm mb-8 leading-relaxed">
+                    <p className="text-sm text-slate-700 font-normal max-w-sm mb-8 leading-relaxed">
                       Děkujeme za vaši poptávku. J. Pufr vás bude kontaktovat e-mailem nebo telefonicky pro upřesnění detailů a vypracování cenové nabídky.
                     </p>
                     <button

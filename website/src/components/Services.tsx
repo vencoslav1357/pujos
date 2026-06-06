@@ -157,7 +157,7 @@ export default function Services() {
                     <h4 className="text-sm font-semibold tracking-wide text-slate-800 uppercase mb-1 font-sans group-hover:text-blue-600 transition-colors">
                       {service.title}
                     </h4>
-                    <p className="text-sm text-slate-500 font-light leading-relaxed">
+                    <p className="text-sm text-slate-700 font-normal leading-relaxed">
                       {service.desc}
                     </p>
                   </div>
@@ -226,7 +226,7 @@ export default function Services() {
                     <h4 className="text-sm font-semibold tracking-wide text-slate-800 uppercase mb-1 font-sans group-hover:text-blue-600 transition-colors">
                       {service.title}
                     </h4>
-                    <p className="text-sm text-slate-500 font-light leading-relaxed">
+                    <p className="text-sm text-slate-700 font-normal leading-relaxed">
                       {service.desc}
                     </p>
                   </div>

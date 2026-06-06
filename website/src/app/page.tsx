@@ -12,7 +12,7 @@ import Preloader from "@/components/Preloader";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans">
+    <div className="relative min-h-screen bg-white text-slate-900 flex flex-col font-sans">
       {/* Intro Preloader */}
       <Preloader />
 

@@ -34,8 +34,8 @@ export default function Hero() {
           }}
         />
         {/* Light Luxury Gradients Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-50/10 via-white/75 to-white" />
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/80 to-white" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/98 via-white/85 to-transparent" />
       </motion.div>
 
       {/* Grid Pattern overlay for depth */}
@@ -78,7 +78,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="text-slate-650 text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-xl mb-10 font-sans"
+            className="text-slate-900 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-xl mb-10 font-sans"
           >
             Zajišťujeme špičkový, spolehlivý a precizní úklid kanceláří, firemních prostor, rodinných domů a mytí oken na klíč. Naší vizitkou je čistota bez kompromisů.
           </motion.p>

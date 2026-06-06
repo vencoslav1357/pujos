@@ -9,7 +9,7 @@ export default function Process() {
       num: "01",
       icon: <Calendar className="w-6 h-6 text-blue-600" />,
       title: "Nezávazná Konzultace",
-      desc: "Kontaktujete nás přes formulář nebo telefonicky. Prodiskutujeme vaše přání, typ vozu či rozsah prostor a domluvíme termín.",
+      desc: "Kontaktujete nás přes formulář nebo telefonicky. Prodiskutujeme vaše přání a rozsah prostor a domluvíme termín.",
     },
     {
       num: "02",
@@ -99,7 +99,7 @@ export default function Process() {
               <h3 className="text-lg font-serif text-slate-800 tracking-wide mb-3 group-hover:text-blue-600 transition-colors font-medium">
                 {step.title}
               </h3>
-              <p className="text-sm text-slate-500 font-light leading-relaxed">
+              <p className="text-sm text-slate-700 font-normal leading-relaxed">
                 {step.desc}
               </p>
 
