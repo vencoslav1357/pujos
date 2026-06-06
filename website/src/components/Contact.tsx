@@ -404,29 +404,27 @@ export default function Contact() {
                     <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
                       Město a ulice realizace
                     </label>
-                    <div className="flex gap-1.5">
-                      <input
-                        type="text"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        onBlur={() => handleCalculateDistance(address)}
-                        className="flex-grow px-3 py-2.5 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans shadow-sm"
-                        placeholder="Např. Říčany, Husova"
-                      />
-                      <button
-                        type="button"
-                        disabled={isCalculatingDistance || address.trim().length < 5}
-                        onClick={() => handleCalculateDistance(address)}
-                        className="px-4 bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:bg-blue-400 rounded-sm font-semibold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 shadow-sm shadow-blue-500/10 cursor-pointer"
-                      >
-                        {isCalculatingDistance ? (
-                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        ) : (
-                          <Map className="w-3.5 h-3.5" />
-                        )}
-                        <span>Spočítat dopravu</span>
-                      </button>
-                    </div>
+                    <input
+                      type="text"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      onBlur={() => handleCalculateDistance(address)}
+                      className="w-full px-3 py-2.5 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-800 font-sans shadow-sm"
+                      placeholder="Např. Říčany, Husova"
+                    />
+                    <button
+                      type="button"
+                      disabled={isCalculatingDistance}
+                      onClick={() => handleCalculateDistance(address)}
+                      className="w-full py-2.5 bg-blue-royal text-white hover:bg-blue-700 disabled:opacity-60 disabled:bg-blue-600/70 rounded-sm font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm shadow-blue-500/10 cursor-pointer"
+                    >
+                      {isCalculatingDistance ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin flex-shrink-0" />
+                      ) : (
+                        <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                      )}
+                      <span>Spočítat dopravu</span>
+                    </button>
                   </div>
                 </div>
 
@@ -490,9 +488,6 @@ export default function Contact() {
 
           {/* RECEIPT DETAILED BREAKDOWN (col-span-5) */}
           <div className="lg:col-span-5 p-6 md:p-8 bg-white border border-slate-200/80 rounded-sm shadow-sm relative overflow-hidden bg-receipt-pattern flex flex-col justify-between">
-            {/* Receipt top border decoration */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-blue-600" />
-            
             <div>
               <h3 className="text-lg font-serif text-slate-900 mb-6 font-bold flex items-center gap-2 border-b border-slate-100 pb-4">
                 Rozpis kalkulace a matematika ceny
