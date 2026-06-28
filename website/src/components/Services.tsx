@@ -18,18 +18,18 @@ export default function Services() {
   const residentialServices = [
     {
       icon: <Droplet className="w-5 h-5 text-blue-600" />,
-      title: "Mytí oken a ostatních prosklených ploch.",
+      title: "Mytí oken a prosklených ploch",
       desc: "Precizní mytí oken, zimních zahrad, skleněných zábradlí a dalších prosklených prvků.",
     },
     {
       icon: <Sparkles className="w-5 h-5 text-blue-600" />,
       title: "Hloubkové čištění koberců",
-      desc: "Tepování koberců, matrací a čištění sedacích souprav či čalounění.",
+      desc: "Mokré tepování koberců a podlahových textilií, které odstraní zažrané nečistoty i nepříjemné pachy.",
     },
     {
       icon: <Armchair className="w-5 h-5 text-blue-600" />,
-      title: "Čištění čalounění, sedaček a matrací",
-      desc: "Hloubkové tepování sedacích souprav, čalouněných židlí a matrací pro svěží a hygienicky čistý domov.",
+      title: "Tepování sedaček a matrací",
+      desc: "Hloubkové čištění čalouněných sedacích souprav, křesel a matrací pro svěží a hygienicky čistý domov.",
     },
     {
       icon: <Construction className="w-5 h-5 text-blue-600" />,
