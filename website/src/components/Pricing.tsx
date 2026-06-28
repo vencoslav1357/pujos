@@ -6,6 +6,22 @@ import { Check, Truck, Info, Home, Building } from "lucide-react";
 export default function Pricing() {
   const pricingCards = [
     {
+      icon: <Building className="w-8 h-8 text-blue-600" />,
+      name: "Komerční úklid",
+      price: "Individuální",
+      desc: "Špičkový úklid firemních prostor, kanceláří a administrativních budov.",
+      popular: false,
+      features: [
+        "Pravidelný i generální úklid kanceláří",
+        "Úklid společných prostor bytových domů",
+        "Jednorázové úklidy po stavbě a rekonstrukci",
+        "Flexibilní harmonogram (mimo pracovní dobu)",
+        "Dlouhodobá spolupráce s garancí kvality",
+        "Zpracování cenové nabídky zdarma do 24h",
+      ],
+      ctaText: "Vyžádat firemní nabídku",
+    },
+    {
       icon: <Home className="w-8 h-8 text-blue-600" />,
       name: "Rezidenční úklid",
       price: "Dle velikosti",
@@ -20,22 +36,6 @@ export default function Pricing() {
         "Bezplatná osobní prohlídka a nacenění",
       ],
       ctaText: "Poptat úklid domu",
-    },
-    {
-      icon: <Building className="w-8 h-8 text-blue-600" />,
-      name: "Komerční úklid",
-      price: "Individuální",
-      desc: "Špičkový úklid firemních prostor, kanceláří a administrativních budov.",
-      popular: true,
-      features: [
-        "Pravidelný i generální úklid kanceláří",
-        "Úklid společných prostor bytových domů",
-        "Jednorázové úklidy po stavbě a rekonstrukci",
-        "Flexibilní harmonogram (mimo pracovní dobu)",
-        "Dlouhodobá spolupráce s garancí kvality",
-        "Zpracování cenové nabídky zdarma do 24h",
-      ],
-      ctaText: "Vyžádat firemní nabídku",
     },
     {
       icon: <Truck className="w-8 h-8 text-blue-600" />,

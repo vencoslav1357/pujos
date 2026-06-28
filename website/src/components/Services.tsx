@@ -26,6 +26,16 @@ export default function Services() {
       title: "Hloubkové čištění koberců",
       desc: "Tepování koberců, matrací a čištění sedacích souprav či čalounění.",
     },
+    {
+      icon: <Armchair className="w-5 h-5 text-blue-600" />,
+      title: "Čištění čalounění, sedaček a matrací",
+      desc: "Hloubkové tepování sedacích souprav, čalouněných židlí a matrací pro svěží a hygienicky čistý domov.",
+    },
+    {
+      icon: <Construction className="w-5 h-5 text-blue-600" />,
+      title: "Úklid po rekonstrukci a malování",
+      desc: "Důkladné odstranění stavebního prachu a nečistot po malování či rekonstrukci bytu nebo domu.",
+    },
   ];
 
   const commercialServices = [
