@@ -20,9 +20,9 @@ export default function CustomCursor() {
     const mediaQuery = window.matchMedia("(any-hover: hover)");
     if (!mediaQuery.matches) return;
 
-    setIsVisible(true);
-
     const moveCursor = (e: MouseEvent) => {
+      // Reveal the cursor on first pointer movement (no-op once already visible)
+      setIsVisible(true);
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
     };
