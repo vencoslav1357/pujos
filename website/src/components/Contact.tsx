@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
+import { flushSync } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Phone, 
@@ -55,6 +56,9 @@ export default function Contact() {
 
   // PDF Generation loading state
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+
+  // Quote metadata (number + date) generated on download to avoid SSR hydration mismatch
+  const [quoteMeta, setQuoteMeta] = useState({ number: "", date: "" });
 
   // Sync selected service type from click events in other components
   useEffect(() => {
@@ -193,6 +197,15 @@ export default function Contact() {
     setIsGeneratingPDF(true);
 
     try {
+      // Generate a fresh quote number + date and flush it into the hidden
+      // template synchronously so html2canvas captures the populated values.
+      flushSync(() => {
+        setQuoteMeta({
+          number: `CP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`,
+          date: new Date().toLocaleDateString("cs-CZ"),
+        });
+      });
+
       // Unhide template momentarily for rendering
       template.style.display = "block";
 
@@ -844,8 +857,8 @@ export default function Contact() {
           <div style={{ textAlign: "right" }}>
             <h2 style={{ fontSize: "16px", color: "#2563eb", fontWeight: "bold", margin: "0 0 5px 0" }}>ORIENTAČNÍ CENOVÁ NABÍDKA</h2>
             <span style={{ fontSize: "11px", color: "#64748b" }}>
-              Číslo: CP-{new Date().getFullYear()}-{Math.floor(1000 + Math.random() * 9000)}<br />
-              Datum: {new Date().toLocaleDateString("cs-CZ")}
+              Číslo: {quoteMeta.number}<br />
+              Datum: {quoteMeta.date}
             </span>
           </div>
         </div>
