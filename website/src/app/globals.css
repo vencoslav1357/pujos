@@ -47,6 +47,12 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  /* Cormorant má dlouhé dolní dotahy (p, j, ý) a kurzíva přesahuje do stran;
+     background-clip:text by je jinak ořezával. Padding rozšíří plochu, do
+     které se glyfy vykreslí. */
+  padding-bottom: 0.14em;
+  padding-right: 0.12em;
+  padding-left: 0.12em;
 }
 
 @utility border-blue-shimmer {

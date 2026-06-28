@@ -113,7 +113,10 @@ export default function RootLayout({
       lang="cs"
       className={`${cormorant.variable} ${inter.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-white text-slate-900 font-sans">
+      <body
+        className="min-h-full flex flex-col bg-white text-slate-900 font-sans"
+        suppressHydrationWarning
+      >
         {/* Strukturovaná data (schema.org) pro vyhledávače — Google i Seznam */}
         <script
           type="application/ld+json"
