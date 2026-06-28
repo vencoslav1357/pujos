@@ -1,16 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Home, 
-  Sparkles, 
-  Droplet, 
-  Calendar,
-  Building, 
-  Briefcase,
+import {
+  Sparkles,
+  Droplet,
   Construction,
   Layers,
-  ArrowUpRight 
+  Armchair,
+  ArrowUpRight
 } from "lucide-react";
 
 export default function Services() {
@@ -20,11 +17,6 @@ export default function Services() {
 
   const residentialServices = [
     {
-      icon: <Home className="w-5 h-5 text-blue-600" />,
-      title: "Generální úklid domácností",
-      desc: "Komplexní precizní úklid rodinných domů a bytů se zaměřením na skryté detaily.",
-    },
-    {
       icon: <Droplet className="w-5 h-5 text-blue-600" />,
       title: "Mytí oken a ostatních prosklených ploch.",
       desc: "Precizní mytí oken, zimních zahrad, skleněných zábradlí a dalších prosklených prvků.",
@@ -32,35 +24,30 @@ export default function Services() {
     {
       icon: <Sparkles className="w-5 h-5 text-blue-600" />,
       title: "Hloubkové čištění koberců",
-      desc: "Tepování koberců, matrací a čištění luxusních sedacích souprav či čalounění.",
-    },
-    {
-      icon: <Calendar className="w-5 h-5 text-blue-600" />,
-      title: "Pravidelný udržovací úklid",
-      desc: "Udržování permanentní čistoty u vás doma v dohodnutých intervalech.",
+      desc: "Tepování koberců, matrací a čištění sedacích souprav či čalounění.",
     },
   ];
 
   const commercialServices = [
     {
-      icon: <Building className="w-5 h-5 text-blue-600" />,
-      title: "Špičkový úklid firemních prostor",
-      desc: "Reprezentativní úklid pro firmy, které dbají na špičkový dojem u svých klientů a zaměstnanců.",
+      icon: <Droplet className="w-5 h-5 text-blue-600" />,
+      title: "Mytí oken a prosklených ploch",
+      desc: "Mytí oken, výloh, prosklených fasád a dělicích příček ve firemních a obchodních prostorech.",
     },
     {
-      icon: <Briefcase className="w-5 h-5 text-blue-600" />,
-      title: "Kancelářské a administrativní budovy",
-      desc: "Pravidelná a spolehlivá správa čistoty v administrativních komplexech a open-space.",
+      icon: <Layers className="w-5 h-5 text-blue-600" />,
+      title: "Hloubkové čištění koberců",
+      desc: "Tepování koberců, kobercových čtverců a podlahových krytin v kancelářích a provozech.",
+    },
+    {
+      icon: <Armchair className="w-5 h-5 text-blue-600" />,
+      title: "Čištění čalounění a sedaček",
+      desc: "Hloubkové čištění čalouněného nábytku, kancelářských židlí a sedaček v čekárnách a zasedačkách.",
     },
     {
       icon: <Construction className="w-5 h-5 text-blue-600" />,
       title: "Úklid po stavbě a rekonstrukci",
       desc: "Jednorázové generální čištění a zbavení prachu po stavebních úpravách a malování.",
-    },
-    {
-      icon: <Layers className="w-5 h-5 text-blue-600" />,
-      title: "Komplexní údržba objektů",
-      desc: "Správa čistoty komerčních nemovitostí navržená přesně podle požadavků provozu.",
     },
   ];
 

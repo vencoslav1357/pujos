@@ -45,7 +45,7 @@ export default function Pricing() {
       desc: "Dopravné pro realizaci služeb kdekoli v Praze a okolí.",
       popular: false,
       features: [
-        "Sazba počítána z Prahy 10 k vám a zpět",
+        "Sazba počítána z Chýnova k vám a zpět",
         "Přesný příjezd v dohodnutý čas",
         "Dovoz veškeré techniky a vybavení v ceně",
         "Transparentní kalkulace předem",

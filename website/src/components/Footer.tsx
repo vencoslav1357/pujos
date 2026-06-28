@@ -108,7 +108,7 @@ export default function Footer() {
             </a>
             <div className="flex items-start gap-3 text-sm text-slate-600 font-normal">
               <MapPin className="w-4 h-4 text-blue-600 mt-0.5" />
-              <span>Průmyslová 1234, Praha 10</span>
+              <span>391 55 Chýnov</span>
             </div>
           </div>
 

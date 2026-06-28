@@ -14,7 +14,7 @@ export default function Philosophy() {
     {
       icon: <Award className="w-8 h-8 text-blue-600" />,
       title: "Prvotřídní Chemie",
-      desc: "Používáme ekologické, šetrné a vysoce účinné čisticí prostředky, které nezatěžují prostředí a dokonale ošetří každý povrch.",
+      desc: "Používáme šetrné a vysoce účinné čisticí prostředky, které dokonale ošetří každý povrch.",
     },
     {
       icon: <ShieldCheck className="w-8 h-8 text-blue-600" />,
@@ -65,7 +65,7 @@ export default function Philosophy() {
           </div>
           <div className="lg:col-span-5">
             <ScrollReveal
-              text="Věříme, že čistota je vizitkou úspěchu a harmonie. Ať už jde o reprezentativní firemní prostory nebo o vaši rodinnou rezidenci, ke každému úkolu přistupujeme jako k řemeslu vyžadujícímu stoprocentní soustředění a cit."
+              text="Čistota je první věc, které si návštěva nebo zákazník všimne. Ať už jde o firemní prostory, nebo o váš rodinný dům, ke každé zakázce přistupujeme se stejnou pečlivostí a důrazem na detail."
               className="text-slate-750 font-normal leading-relaxed text-sm md:text-base"
             />
           </div>

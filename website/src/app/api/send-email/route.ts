@@ -10,7 +10,6 @@ export async function POST(request: Request) {
       email,
       serviceType,
       area,
-      frequency,
       address,
       distance,
       transportPrice,
@@ -73,13 +72,12 @@ Nová poptávka od: ${name}
 Telefon: ${phone}
 E-mail: ${email}
 Adresa realizace: ${address || "Neuvedeno"}
-Vzdálenost (od Prahy 10): ${distance !== undefined ? `${distance} km` : "Neuvedeno"}
+Vzdálenost (od Chýnova): ${distance !== undefined ? `${distance} km` : "Neuvedeno"}
 Cena dopravy: ${transportPrice !== undefined ? `${transportPrice} Kč` : "Neuvedeno"}
 
 Specifikace:
 - Typ úklidu: ${serviceName}
 - Rozloha: ${area} m²
-- Frekvence: ${frequency}
 - Doplňkové služby: ${extras.length > 0 ? extras.join(", ") : "Žádné"}
 - Orientační kalkulace: ${estimatedPriceMin} Kč - ${estimatedPriceMax} Kč
 
@@ -134,10 +132,6 @@ ${message || "Bez doprovodné zprávy."}
           <tr>
             <td style="padding: 8px 0; font-weight: bold;">Rozloha nemovitosti:</td>
             <td style="padding: 8px 0;">${area} m²</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold;">Frekvence úklidu:</td>
-            <td style="padding: 8px 0;">${frequency}</td>
           </tr>
           <tr>
             <td style="padding: 8px 0; font-weight: bold; vertical-align: top;">Doplňkové služby:</td>
@@ -210,7 +204,6 @@ děkujeme za Váš zájem o služby J. Pufr úklidové služby. Vaši poptávku 
 Rekapitulace poptávky:
 - Typ úklidu: ${serviceName}
 - Rozloha nemovitosti: ${area} m²
-- Frekvence úklidu: ${frequency}
 - Adresa realizace: ${address || "Neuvedeno"}
 - Orientační rozsah ceny: ${estimatedPriceMin} Kč - ${estimatedPriceMax} Kč
 
@@ -244,10 +237,6 @@ J. Pufr úklidové služby
               <td style="padding: 8px 0;">${area} m²</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; font-weight: bold;">Frekvence úklidu:</td>
-              <td style="padding: 8px 0;">${frequency}</td>
-            </tr>
-            <tr>
               <td style="padding: 8px 0; font-weight: bold; vertical-align: top;">Doplňkové služby:</td>
               <td style="padding: 8px 0; margin: 0;"><ul style="margin: 0; padding-left: 20px;">${extrasList}</ul></td>
             </tr>
@@ -273,7 +262,7 @@ J. Pufr úklidové služby
           <strong>J. Pufr úklidové služby</strong><br />
           Telefon: +420 777 777 777<br />
           E-mail: info@jpufr.cz<br />
-          Sídlo: Průmyslová 1234, 102 00 Praha 10
+          Sídlo: 391 55 Chýnov
         </div>
       </div>
     `;

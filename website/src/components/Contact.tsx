@@ -31,7 +31,6 @@ export default function Contact() {
   // Calculator Configuration State
   const [serviceType, setServiceType] = useState<"residence" | "commercial">("commercial");
   const [area, setArea] = useState(100);
-  const [frequency, setFrequency] = useState("Pravidelně (1-2x týdně)");
   const [address, setAddress] = useState("");
   const [distance, setDistance] = useState<number | undefined>(undefined);
   const [isCalculatingDistance, startCalculateDistance] = useTransition();
@@ -64,12 +63,10 @@ export default function Contact() {
       const selected = customEvent.detail;
       if (selected === "residence-cleaning") {
         setServiceType("residence");
-        setFrequency("Jednorázově");
       } else if (selected === "commercial-cleaning") {
         setServiceType("commercial");
-        setFrequency("Pravidelně (1-2x týdně)");
       }
-      
+
       const element = document.getElementById("kontakt");
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
@@ -79,15 +76,6 @@ export default function Contact() {
     window.addEventListener("select-service-type", handleServiceSelect);
     return () => window.removeEventListener("select-service-type", handleServiceSelect);
   }, []);
-
-  // Update default frequency when service type changes
-  useEffect(() => {
-    if (serviceType === "residence") {
-      setFrequency("Jednorázově");
-    } else {
-      setFrequency("Pravidelně (1-2x týdně)");
-    }
-  }, [serviceType]);
 
   // Haversine formula fallback
   const calculateHaversineDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -134,9 +122,9 @@ export default function Contact() {
         const destLat = parseFloat(geoData[0].lat);
         const destLon = parseFloat(geoData[0].lon);
         
-        // Base location: Průmyslová, Praha 10
-        const baseLat = 50.0617;
-        const baseLon = 14.5312;
+        // Base location: Chýnov
+        const baseLat = 49.4061;
+        const baseLon = 14.8106;
         
         // Try OSRM driving distance
         const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${baseLon},${baseLat};${destLon},${destLat}?overview=false`;
@@ -164,51 +152,38 @@ export default function Contact() {
 
   // Pricing calculations
   const basePricePerSqm = serviceType === "residence" ? 24 : 19;
-  
-  // Frequency multipliers
-  let frequencyMultiplier = 1.0;
-  let frequencyLabel = "";
-  if (serviceType === "residence") {
-    if (frequency === "Jednorázově") {
-      frequencyMultiplier = 1.3;
-      frequencyLabel = "Jednorázový úklid (+30 % náročnost)";
-    } else if (frequency === "Pravidelně (1x týdně)") {
-      frequencyMultiplier = 0.85;
-      frequencyLabel = "Pravidelný úklid (-15 % loyalty)";
-    } else if (frequency === "Pravidelně (1x za 14 dní)") {
-      frequencyMultiplier = 0.95;
-      frequencyLabel = "Pravidelný úklid (-5 % loyalty)";
-    }
-  } else {
-    if (frequency === "Jednorázově") {
-      frequencyMultiplier = 1.25;
-      frequencyLabel = "Jednorázový úklid (+25 % náročnost)";
-    } else if (frequency === "Pravidelně (1-2x týdně)") {
-      frequencyMultiplier = 0.9;
-      frequencyLabel = "Pravidelný úklid (-10 % loyalty)";
-    } else if (frequency === "Pravidelně (3-5x týdně)") {
-      frequencyMultiplier = 0.8;
-      frequencyLabel = "Častý úklid (-20 % objemová sleva)";
-    }
-  }
-
   const rawBaseCleaning = area * basePricePerSqm;
-  const baseCleaningAdjusted = Math.round(rawBaseCleaning * frequencyMultiplier);
-  const frequencyDifference = baseCleaningAdjusted - rawBaseCleaning;
 
   // Transport calculation (7 CZK/km both directions, i.e. 14 CZK per distance km)
   const transportCost = distance ? Math.round(distance * 7 * 2) : 0;
 
-  // Extras pricing
-  const windowsCost = extras.windows 
-    ? (serviceType === "residence" ? 1200 + area * 5 : 1800 + area * 4)
-    : 0;
-  const carpetCost = extras.carpet ? area * 15 : 0;
+  // Tiered per-m² rates (min–max) selected by total area band.
+  // Carpets: 10–30 → 45–100, 30–100 → 30–45, 100–500 → 20–30, 500+ → 15–20 Kč/m²
+  const carpetRate =
+    area < 30 ? { min: 45, max: 100 }
+    : area < 100 ? { min: 30, max: 45 }
+    : area < 500 ? { min: 20, max: 30 }
+    : { min: 15, max: 20 };
+  // Windows: do 50 → 45–60, 50–200 → 35–45, 200–500 → 25–35, nad 500 → 15–25 Kč/m²
+  const windowRate =
+    area < 50 ? { min: 45, max: 60 }
+    : area < 200 ? { min: 35, max: 45 }
+    : area < 500 ? { min: 25, max: 35 }
+    : { min: 15, max: 25 };
+
+  // Extras pricing (windows & carpets use tiered ranges; others are fixed)
+  const windowsCostMin = extras.windows ? area * windowRate.min : 0;
+  const windowsCostMax = extras.windows ? area * windowRate.max : 0;
+  const carpetCostMin = extras.carpet ? area * carpetRate.min : 0;
+  const carpetCostMax = extras.carpet ? area * carpetRate.max : 0;
   const upholsteryCost = extras.upholstery ? 1500 : 0;
   const constructionCost = extras.construction ? area * 25 : 0;
 
-  const totalCalculatedMin = Math.round(baseCleaningAdjusted + windowsCost + carpetCost + upholsteryCost + constructionCost + transportCost);
-  const totalCalculatedMax = Math.round(totalCalculatedMin * 1.25);
+  // Core (single-valued) items carry the +25 % uncertainty spread;
+  // windows & carpets contribute their explicit min–max ranges.
+  const coreCost = rawBaseCleaning + upholsteryCost + constructionCost + transportCost;
+  const totalCalculatedMin = Math.round(coreCost + windowsCostMin + carpetCostMin);
+  const totalCalculatedMax = Math.round(coreCost * 1.25 + windowsCostMax + carpetCostMax);
 
   // PDF Quote Download Handler
   const handleDownloadPDF = async () => {
@@ -257,8 +232,8 @@ export default function Contact() {
     if (attachData) {
       // Prepare active extras list
       const activeExtrasList: string[] = [];
-      if (extras.windows) activeExtrasList.push(`Mytí oken (${windowsCost} Kč)`);
-      if (extras.carpet) activeExtrasList.push(`Tepování koberců (${carpetCost} Kč)`);
+      if (extras.windows) activeExtrasList.push(`Mytí oken (${windowsCostMin.toLocaleString("cs-CZ")}–${windowsCostMax.toLocaleString("cs-CZ")} Kč)`);
+      if (extras.carpet) activeExtrasList.push(`Tepování koberců (${carpetCostMin.toLocaleString("cs-CZ")}–${carpetCostMax.toLocaleString("cs-CZ")} Kč)`);
       if (extras.upholstery) activeExtrasList.push(`Čištění čalounění (${upholsteryCost} Kč)`);
       if (extras.construction) activeExtrasList.push(`Úklid po stavbě (${constructionCost} Kč)`);
 
@@ -268,7 +243,6 @@ export default function Contact() {
         email: formData.email,
         serviceType,
         area,
-        frequency: `${frequency} (${frequencyLabel})`,
         address,
         distance,
         transportPrice: transportCost,
@@ -413,34 +387,8 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Frequency & Address row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Frequency selector */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
-                      Frekvence spolupráce
-                    </label>
-                    <select
-                      value={frequency}
-                      onChange={(e) => setFrequency(e.target.value)}
-                      className="px-3 py-2.5 bg-white border border-slate-200 focus:border-blue-500 focus:outline-none rounded-sm transition-colors text-sm text-slate-750 font-sans cursor-pointer shadow-sm"
-                    >
-                      {serviceType === "residence" ? (
-                        <>
-                          <option value="Jednorázově">Jednorázový generální úklid</option>
-                          <option value="Pravidelně (1x týdně)">Pravidelně (1x týdně) -15%</option>
-                          <option value="Pravidelně (1x za 14 dní)">Pravidelně (1x za 14 dní) -5%</option>
-                        </>
-                      ) : (
-                        <>
-                          <option value="Pravidelně (1-2x týdně)">Pravidelně (1-2x týdně)</option>
-                          <option value="Pravidelně (3-5x týdně)">Pravidelně (3-5x týdně) -20%</option>
-                          <option value="Jednorázově">Jednorázový generální úklid</option>
-                        </>
-                      )}
-                    </select>
-                  </div>
-
+                {/* Address row */}
+                <div className="grid grid-cols-1 gap-4">
                   {/* Address Input */}
                   <div className="flex flex-col gap-2">
                     <label className="text-[10px] uppercase tracking-wider text-slate-400 font-sans font-bold">
@@ -475,7 +423,7 @@ export default function Contact() {
                   <div className="text-xs text-blue-700 bg-blue-50 border border-blue-100/50 px-3 py-2.5 rounded-sm flex justify-between items-center mt-1">
                     <span className="flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-blue-600" />
-                      Dojezdová vzdálenost z Prahy 10: <strong>{distance} km</strong>
+                      Dojezdová vzdálenost z Chýnova: <strong>{distance} km</strong>
                     </span>
                     <span className="font-semibold text-slate-700">Dopravné: +{transportCost} Kč</span>
                   </div>
@@ -554,26 +502,6 @@ export default function Contact() {
                     <span className="font-bold text-slate-800">{rawBaseCleaning.toLocaleString("cs-CZ")} Kč</span>
                   </motion.div>
 
-                  {/* Frequency modification */}
-                  {frequencyMultiplier !== 1.0 && (
-                    <motion.div 
-                      key="frequency-adjust"
-                      layout
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="flex justify-between items-start border-b border-slate-100 pb-2.5 text-xs"
-                    >
-                      <div>
-                        <span className="font-semibold block text-slate-800 font-sans">Frekvenční koeficient</span>
-                        <span className="text-slate-400">{frequencyLabel}</span>
-                      </div>
-                      <span className={`font-bold ${frequencyDifference < 0 ? "text-emerald-600" : "text-amber-600"}`}>
-                        {frequencyDifference > 0 ? "+" : ""}{frequencyDifference.toLocaleString("cs-CZ")} Kč
-                      </span>
-                    </motion.div>
-                  )}
-
                   {/* Transport */}
                   {distance !== undefined && (
                     <motion.div 
@@ -604,9 +532,9 @@ export default function Contact() {
                     >
                       <div>
                         <span className="font-semibold block text-slate-800 font-sans">Doplněk: Mytí oken</span>
-                        <span className="text-xs text-slate-400">Paušál + okna dle plochy {area} m²</span>
+                        <span className="text-xs text-slate-400">{area} m² × {windowRate.min}–{windowRate.max} Kč/m²</span>
                       </div>
-                      <span className="font-bold text-slate-800">+{windowsCost.toLocaleString("cs-CZ")} Kč</span>
+                      <span className="font-bold text-slate-800">+{windowsCostMin.toLocaleString("cs-CZ")}–{windowsCostMax.toLocaleString("cs-CZ")} Kč</span>
                     </motion.div>
                   )}
 
@@ -621,9 +549,9 @@ export default function Contact() {
                     >
                       <div>
                         <span className="font-semibold block text-slate-800 font-sans">Doplněk: Tepování koberců</span>
-                        <span className="text-xs text-slate-400">Čištění extraktorem ({area} m² × 15 Kč)</span>
+                        <span className="text-xs text-slate-400">{area} m² × {carpetRate.min}–{carpetRate.max} Kč/m²</span>
                       </div>
-                      <span className="font-bold text-slate-800">+{carpetCost.toLocaleString("cs-CZ")} Kč</span>
+                      <span className="font-bold text-slate-800">+{carpetCostMin.toLocaleString("cs-CZ")}–{carpetCostMax.toLocaleString("cs-CZ")} Kč</span>
                     </motion.div>
                   )}
 
@@ -927,7 +855,7 @@ export default function Contact() {
           <div style={{ backgroundColor: "#f8fafc", padding: "20px", border: "1px solid #f1f5f9", borderRadius: "2px" }}>
             <h3 style={{ fontSize: "11px", textTransform: "uppercase", color: "#64748b", fontWeight: "bold", margin: "0 0 10px 0", borderBottom: "1px solid #e2e8f0", paddingBottom: "5px" }}>POSKYTOVATEL SLUŽEB</h3>
             <p style={{ fontSize: "13px", fontWeight: "bold", color: "#0f172a", margin: "0 0 5px 0" }}>J. Pufr úklidové služby</p>
-            <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 3px 0" }}>Průmyslová 1234, 102 00 Praha 10</p>
+            <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 3px 0" }}>391 55 Chýnov</p>
             <p style={{ fontSize: "12px", color: "#334155", margin: "0" }}>E-mail: info@jpufr.cz | Tel: +420 777 777 777</p>
           </div>
           <div style={{ backgroundColor: "#f8fafc", padding: "20px", border: "1px solid #f1f5f9", borderRadius: "2px" }}>
@@ -937,9 +865,6 @@ export default function Contact() {
             </p>
             <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 5px 0" }}>
               <strong>Celková plocha:</strong> {area} m²
-            </p>
-            <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 5px 0" }}>
-              <strong>Frekvence:</strong> {frequency}
             </p>
             <p style={{ fontSize: "12px", color: "#334155", margin: "0" }}>
               <strong>Místo realizace:</strong> {address || "Neuvedeno"}
@@ -962,15 +887,6 @@ export default function Contact() {
               <td style={{ padding: "12px 10px", color: "#64748b" }}>{area} m² × {basePricePerSqm} Kč/m²</td>
               <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{rawBaseCleaning.toLocaleString("cs-CZ")} Kč</td>
             </tr>
-            {frequencyMultiplier !== 1.0 && (
-              <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
-                <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Frekvenční koeficient</td>
-                <td style={{ padding: "12px 10px", color: "#64748b" }}>{frequencyLabel}</td>
-                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold", color: frequencyDifference < 0 ? "#10b981" : "#d97706" }}>
-                  {frequencyDifference > 0 ? "+" : ""}{frequencyDifference.toLocaleString("cs-CZ")} Kč
-                </td>
-              </tr>
-            )}
             {distance !== undefined && (
               <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
                 <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Dopravné na místo realizace</td>
@@ -981,15 +897,15 @@ export default function Contact() {
             {extras.windows && (
               <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
                 <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Mytí oken a prosklených ploch</td>
-                <td style={{ padding: "12px 10px", color: "#64748b" }}>Paušál + okna dle podlahové plochy</td>
-                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{windowsCost.toLocaleString("cs-CZ")} Kč</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>{area} m² × {windowRate.min}–{windowRate.max} Kč/m²</td>
+                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{windowsCostMin.toLocaleString("cs-CZ")} – {windowsCostMax.toLocaleString("cs-CZ")} Kč</td>
               </tr>
             )}
             {extras.carpet && (
               <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
                 <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Hloubkové tepování koberců</td>
-                <td style={{ padding: "12px 10px", color: "#64748b" }}>Plocha {area} m² × 15 Kč/m²</td>
-                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{carpetCost.toLocaleString("cs-CZ")} Kč</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>{area} m² × {carpetRate.min}–{carpetRate.max} Kč/m²</td>
+                <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{carpetCostMin.toLocaleString("cs-CZ")} – {carpetCostMax.toLocaleString("cs-CZ")} Kč</td>
               </tr>
             )}
             {extras.upholstery && (
