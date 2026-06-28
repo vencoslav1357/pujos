@@ -146,7 +146,7 @@ export default function Contact() {
           const estimatedRoadDistKm = Math.round(straightLineDist * 1.3 * 10) / 10;
           setDistance(estimatedRoadDistKm);
         }
-      } catch (err: any) {
+      } catch (err) {
         console.error(err);
         setDistanceError("Nepodařilo se automaticky spočítat trasu. Zkuste upřesnit adresu.");
         setDistance(undefined);
@@ -289,9 +289,9 @@ export default function Contact() {
       }
 
       setFormSubmitted(true);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setApiError(err.message || "Nepodařilo se navázat spojení se serverem.");
+      setApiError(err instanceof Error ? err.message : "Nepodařilo se navázat spojení se serverem.");
     } finally {
       setIsSubmitting(false);
     }

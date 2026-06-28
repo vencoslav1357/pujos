@@ -295,7 +295,7 @@ J. Pufr úklidové služby
       message: "Poptávka byla úspěšně odeslána na e-mail."
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error sending email:", error);
     return NextResponse.json(
       { error: "Nepodařilo se odeslat e-mail. Zkuste to prosím znovu nebo nás kontaktujte telefonicky." },
