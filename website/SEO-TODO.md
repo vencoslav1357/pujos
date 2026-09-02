@@ -24,12 +24,13 @@ které musíš dodělat ručně mimo kód, nebo doplnit konkrétní hodnoty.
 
 NAP = Name, Address, Phone. Musí být **shodné** všude (web, Google, Seznam).
 
-- [ ] Doplnit v `src/lib/site.ts` (objekt `siteConfig`): `telephone`, `email`,
-      `address.streetAddress`, případně IČO.
-- [ ] Doplnit zobrazené kontakty i v komponentách:
+- [x] Doplnit v `src/lib/site.ts` (objekt `siteConfig`): `telephone`, `email`.
+- [ ] Doplnit `address.streetAddress`, případně IČO.
+- [x] Doplnit zobrazené kontakty i v komponentách:
   - `src/components/Contact.tsx` (telefon, e-mail, spodní kontaktní lišta)
   - `src/components/Footer.tsx` (adresa, telefon, e-mail)
-- [ ] Zkontrolovat otevírací dobu v `siteConfig.openingHours` (teď Po–So 8:00–18:00).
+  - `src/components/Navbar.tsx` (telefon)
+- [x] Zkontrolovat otevírací dobu v `siteConfig.openingHours` (teď Po–Ne 8:00–18:00).
 
 ## 3. Google Search Console
 

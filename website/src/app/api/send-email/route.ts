@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { siteConfig } from "@/lib/site";
 
 export async function POST(request: Request) {
   try {
@@ -32,6 +33,12 @@ export async function POST(request: Request) {
     const smtpPort = parseInt(process.env.SMTP_PORT || "587");
     const smtpUser = process.env.SMTP_USER || "";
     const smtpPass = process.env.SMTP_PASS || "";
+
+    // Odesílací adresa. Gmail přepíše hlavičku From na přihlášený účet, takže
+    // musí odpovídat SMTP_USER (nebo ověřenému aliasu v Gmailu).
+    const fromAddress = process.env.MAIL_FROM || smtpUser || "josefpufr@gmail.com";
+    // Adresa, kam chodí notifikace o nových poptávkách.
+    const ownerAddress = process.env.MAIL_TO || siteConfig.email;
 
     let transporter;
 
@@ -185,8 +192,10 @@ ${message || "Bez doprovodné zprávy."}
     `;
 
     const mailOptions = {
-      from: `"J. Pufr Poptávkový Systém" <no-reply@jpufr.cz>`,
-      to: "gekoncicek@gmail.com",
+      from: `"J. Pufr Poptávkový Systém" <${fromAddress}>`,
+      to: ownerAddress,
+      // Odpověď na notifikaci půjde rovnou zákazníkovi.
+      replyTo: `"${name}" <${email}>`,
       subject: subject,
       text: textContent,
       html: htmlContent,
@@ -209,14 +218,14 @@ Rekapitulace poptávky:
 
 S pozdravem,
 J. Pufr úklidové služby
-+420 777 777 777 | info@jpufr.cz
++420 720 021 186 | josefpufr@email.cz
     ` : `
 Dobrý den,
 děkujeme za Vaši zprávu / poptávku. Úspěšně jsme ji přijali a budeme Vás kontaktovat do 24 hodin.
 
 S pozdravem,
 J. Pufr úklidové služby
-+420 777 777 777 | info@jpufr.cz
++420 720 021 186 | josefpufr@email.cz
     `;
 
     const customerHtml = `
@@ -260,16 +269,18 @@ J. Pufr úklidové služby
 
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
           <strong>J. Pufr úklidové služby</strong><br />
-          Telefon: +420 777 777 777<br />
-          E-mail: info@jpufr.cz<br />
+          Telefon: +420 720 021 186<br />
+          E-mail: josefpufr@email.cz<br />
           Sídlo: 391 55 Chýnov
         </div>
       </div>
     `;
 
     const customerMailOptions = {
-      from: `"J. Pufr úklidové služby" <no-reply@jpufr.cz>`,
+      from: `"J. Pufr úklidové služby" <${fromAddress}>`,
       to: email,
+      // Zákazník odpovídá na provozní e-mail, ne na odesílací Gmail.
+      replyTo: ownerAddress,
       subject: customerSubject,
       text: customerText,
       html: customerHtml,

@@ -25,9 +25,9 @@ export const siteConfig = {
   // Krátký popis pro Open Graph / sociální sítě:
   tagline: "Profesionální úklid firem a domácností",
 
-  // ── Kontaktní údaje (placeholdery — doplň skutečné) ──────────────────
-  telephone: "+420777777777",
-  email: "info@jpufr.cz",
+  // ── Kontaktní údaje ─────────────────────────────────────────────────
+  telephone: "+420720021186",
+  email: "josefpufr@email.cz",
 
   // ── Adresa / sídlo provozovny ───────────────────────────────────────
   address: {
@@ -41,10 +41,18 @@ export const siteConfig = {
   // Zeměpisné souřadnice provozovny (Chýnov) — slouží i pro výpočet dopravy.
   geo: { latitude: 49.4061, longitude: 14.8106 },
 
-  // Provozní doba (z webu: Po–So 8:00–18:00)
+  // Provozní doba (z webu: Po–Ne 8:00–18:00)
   openingHours: [
     {
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      days: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
       opens: "08:00",
       closes: "18:00",
     },

@@ -93,18 +93,18 @@ export default function Footer() {
               Kontakt
             </h4>
             <a
-              href="tel:+420777777777"
+              href="tel:+420720021186"
               className="flex items-start gap-3 group text-sm text-slate-600 hover:text-blue-600 transition-colors font-normal"
             >
               <Phone className="w-4 h-4 text-blue-600 mt-0.5" />
-              <span>+420 777 777 777</span>
+              <span>+420 720 021 186</span>
             </a>
             <a
-              href="mailto:info@jpufr.cz"
+              href="mailto:josefpufr@email.cz"
               className="flex items-start gap-3 group text-sm text-slate-600 hover:text-blue-600 transition-colors font-normal"
             >
               <Mail className="w-4 h-4 text-blue-600 mt-0.5" />
-              <span>info@jpufr.cz</span>
+              <span>josefpufr@email.cz</span>
             </a>
             <div className="flex items-start gap-3 text-sm text-slate-600 font-normal">
               <MapPin className="w-4 h-4 text-blue-600 mt-0.5" />
@@ -120,14 +120,8 @@ export default function Footer() {
             &copy; {currentYear} J. Pufr úklidové služby. Všechna práva vyhrazena.
           </p>
           <div className="flex flex-col items-center sm:items-end gap-1">
-            <p className="text-xs text-slate-400 font-light font-sans flex items-center gap-1">
-              <span>Navrhnuto s důrazem na</span>
-              <span className="text-blue-600 font-semibold">spolehlivost</span>
-            </p>
-            <p className="text-[11px] text-slate-400 font-light font-sans flex items-center gap-1">
-              <span>Made with</span>
-              <span className="text-rose-500">♥</span>
-              <span>by Jan Veselý</span>
+            <p className="text-xs text-slate-400 font-light font-sans">
+              made by Jan Veselý
             </p>
           </div>
         </div>

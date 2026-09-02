@@ -69,11 +69,11 @@ export default function Navbar() {
           {/* CTA & Contact Buttons */}
           <div className="hidden md:flex items-center gap-6">
             <a
-              href="tel:+420777777777"
+              href="tel:+420720021186"
               className="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600 transition-colors duration-300 font-semibold"
             >
               <Phone className="w-4 h-4 text-blue-600" />
-              <span>+420 777 777 777</span>
+              <span>+420 720 021 186</span>
             </a>
             <a
               href="#kontakt"
@@ -127,11 +127,11 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col gap-4 mt-4">
               <a
-                href="tel:+420777777777"
+                href="tel:+420720021186"
                 className="flex items-center gap-3 text-slate-700 hover:text-blue-600 transition-colors text-lg font-semibold"
               >
                 <Phone className="w-5 h-5 text-blue-600" />
-                <span>+420 777 777 777</span>
+                <span>+420 720 021 186</span>
               </a>
               <a
                 href="#kontakt"

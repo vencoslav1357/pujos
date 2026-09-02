@@ -112,7 +112,7 @@ export default function Contact() {
         
         const geoResponse = await fetch(geoUrl, {
           headers: {
-            "User-Agent": "JPufrCleaningApp/1.0 (info@jpufr.cz)"
+            "User-Agent": "JPufrCleaningApp/1.0 (josefpufr@email.cz)"
           }
         });
         
@@ -807,25 +807,25 @@ export default function Contact() {
 
         {/* QUICK CONTACT INFO ROW AT THE BOTTOM */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto w-full font-sans">
-          <a href="tel:+420777777777" className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4 group hover:border-blue-500/35 transition-all duration-300">
+          <a href="tel:+420720021186" className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4 group hover:border-blue-500/35 transition-all duration-300">
             <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center group-hover:bg-blue-50 group-hover:border-blue-500 transition-all"><Phone className="w-4 h-4 text-blue-600" /></span>
             <div>
               <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Zavolejte nám</span>
-              <span className="text-sm font-semibold text-slate-750 group-hover:text-blue-600 transition-colors">+420 777 777 777</span>
+              <span className="text-sm font-semibold text-slate-750 group-hover:text-blue-600 transition-colors">+420 720 021 186</span>
             </div>
           </a>
-          <a href="mailto:info@jpufr.cz" className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4 group hover:border-blue-500/35 transition-all duration-300">
+          <a href="mailto:josefpufr@email.cz" className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4 group hover:border-blue-500/35 transition-all duration-300">
             <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center group-hover:bg-blue-50 group-hover:border-blue-500 transition-all"><Mail className="w-4 h-4 text-blue-600" /></span>
             <div>
               <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Napište nám</span>
-              <span className="text-sm font-semibold text-slate-750 group-hover:text-blue-600 transition-colors">info@jpufr.cz</span>
+              <span className="text-sm font-semibold text-slate-750 group-hover:text-blue-600 transition-colors">josefpufr@email.cz</span>
             </div>
           </a>
           <div className="p-5 bg-white border border-slate-200/80 rounded-sm shadow-sm flex items-center gap-4">
             <span className="w-10 h-10 rounded-sm bg-blue-50/50 border border-blue-100/50 flex items-center justify-center"><Clock className="w-4 h-4 text-blue-600" /></span>
             <div>
               <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Provozní doba</span>
-              <span className="text-sm font-semibold text-slate-750">Po - So: 8:00 - 18:00</span>
+              <span className="text-sm font-semibold text-slate-750">Po - Ne: 8:00 - 18:00</span>
             </div>
           </div>
         </div>
@@ -869,7 +869,7 @@ export default function Contact() {
             <h3 style={{ fontSize: "11px", textTransform: "uppercase", color: "#64748b", fontWeight: "bold", margin: "0 0 10px 0", borderBottom: "1px solid #e2e8f0", paddingBottom: "5px" }}>POSKYTOVATEL SLUŽEB</h3>
             <p style={{ fontSize: "13px", fontWeight: "bold", color: "#0f172a", margin: "0 0 5px 0" }}>J. Pufr úklidové služby</p>
             <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 3px 0" }}>391 55 Chýnov</p>
-            <p style={{ fontSize: "12px", color: "#334155", margin: "0" }}>E-mail: info@jpufr.cz | Tel: +420 777 777 777</p>
+            <p style={{ fontSize: "12px", color: "#334155", margin: "0" }}>E-mail: josefpufr@email.cz | Tel: +420 720 021 186</p>
           </div>
           <div style={{ backgroundColor: "#f8fafc", padding: "20px", border: "1px solid #f1f5f9", borderRadius: "2px" }}>
             <h3 style={{ fontSize: "11px", textTransform: "uppercase", color: "#64748b", fontWeight: "bold", margin: "0 0 10px 0", borderBottom: "1px solid #e2e8f0", paddingBottom: "5px" }}>SPECIFIKACE POPTÁVKY</h3>
@@ -955,7 +955,7 @@ export default function Contact() {
         <div style={{ borderTop: "1px solid #cbd5e1", paddingTop: "20px", fontSize: "11px", color: "#64748b", textAlign: "center", lineHeight: "1.6" }}>
           <p style={{ margin: "0 0 5px 0" }}>Děkujeme za Váš zájem a těšíme se na případnou spolupráci.</p>
           <p style={{ margin: "0", fontWeight: "bold", color: "#475569" }}>
-            J. Pufr úklidové služby | +420 777 777 777 | info@jpufr.cz | www.jpufr.cz
+            J. Pufr úklidové služby | +420 720 021 186 | josefpufr@email.cz | www.jpufr.cz
           </p>
         </div>
       </div>
