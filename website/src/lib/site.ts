@@ -199,7 +199,8 @@ export function getStructuredData() {
         legalName: siteConfig.legalName,
         description: siteConfig.description,
         url: siteUrl,
-        image: `${siteUrl}/opengraph-image`,
+        image: `${siteUrl}/og-image.png`,
+        logo: `${siteUrl}/icon-512.png`,
         telephone: siteConfig.telephone,
         email: siteConfig.email,
         currenciesAccepted: "CZK",
@@ -276,7 +277,7 @@ export function getStructuredData() {
         inLanguage: "cs",
         isPartOf: { "@id": websiteId },
         about: { "@id": businessId },
-        primaryImageOfPage: `${siteUrl}/opengraph-image`,
+        primaryImageOfPage: `${siteUrl}/og-image.png`,
       },
       {
         "@type": "FAQPage",

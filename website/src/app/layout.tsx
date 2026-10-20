@@ -16,7 +16,12 @@ const inter = Inter({
 });
 
 const title = `${siteConfig.legalName} | ${siteConfig.tagline}`;
-const shareImageAlt = `${siteConfig.legalName} — ${siteConfig.name}`;
+const shareImage = {
+  url: `${siteUrl}/og-image.png`,
+  width: 1200,
+  height: 630,
+  alt: `${siteConfig.legalName} — úklid kanceláří, domácností a po stavbě`,
+};
 
 // Ověřovací tokeny pro webmaster nástroje (Google Search Console, Seznam Webmaster).
 // Výchozí hodnoty lze přepsat env proměnnými.
@@ -74,27 +79,13 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title,
     description: siteConfig.description,
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: shareImageAlt,
-      },
-    ],
+    images: [shareImage],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description: siteConfig.description,
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: shareImageAlt,
-      },
-    ],
+    images: [shareImage],
   },
   robots: {
     index: true,
@@ -106,11 +97,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
       "max-video-preview": -1,
     },
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
   },
   manifest: "/manifest.webmanifest",
   verification,
