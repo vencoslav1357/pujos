@@ -1,0 +1,36 @@
+<!doctype html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../kit/kit.css" />
+<style>
+  .canvas { background: #f8fafc; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  /* Jemná mřížka a modré světlo jako na webu (bg-grid-pattern). */
+  .grid { position: absolute; inset: 0; background-size: calc(var(--u) * 9) calc(var(--u) * 9);
+    background-image: linear-gradient(to right, rgba(37,99,235,.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(37,99,235,.05) 1px, transparent 1px);
+    mask-image: radial-gradient(70% 80% at 50% 50%, #000 0%, transparent 100%); }
+  .glow { position: absolute; border-radius: 50%; filter: blur(calc(var(--u) * 6)); }
+  .tag { position: relative; margin-top: calc(var(--u) * 6); font: italic 500 calc(var(--u) * 7.4)/1.1 "Cormorant Garamond"; color: var(--navy); }
+  .list { position: relative; margin-top: calc(var(--u) * 3.4); font: 500 calc(var(--u) * 2.25)/1 Inter; letter-spacing: .28em; text-transform: uppercase; color: var(--slate); }
+  .list b { color: var(--royal); font-weight: 600; padding: 0 .55em; }
+  .rule { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--u) * 1.1); background: linear-gradient(90deg, #0f172a, #2563eb 50%, #38a9f8); }
+</style>
+<body>
+<div class="canvas" id="c"></div>
+<script type="module">
+  // Náhled odkazu (Open Graph) 1200 × 630 — co se ukáže při sdílení webu.
+  //   ?tag=… vlastní podtitul
+  import { setup, ready, params, loadFonts, lockup, html } from "../kit/kit.js";
+  const { w, h, u } = setup(1200, 630);
+  await loadFonts();
+  const tag = params.get("tag") ?? "Profesionální úklid firem a domácností";
+  const items = ["Kanceláře", "Domácnosti", "Okna", "Koberce", "Po stavbě"];
+  document.getElementById("c").innerHTML = html`
+    <div class="grid"></div>
+    <div class="glow" style="left:${-12 * u}px;top:${-20 * u}px;width:${60 * u}px;height:${50 * u}px;background:rgba(56,169,248,.16)"></div>
+    <div class="glow" style="right:${-14 * u}px;bottom:${-24 * u}px;width:${70 * u}px;height:${55 * u}px;background:rgba(37,99,235,.13)"></div>
+    <div style="position:relative">${lockup({ height: 25 * u })}</div>
+    <div class="tag">${tag}</div>
+    <div class="list">${items.join("<b>·</b>")}</div>
+    <div class="rule"></div>`;
+  await ready();
+</script>
+</body>

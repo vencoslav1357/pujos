@@ -1,0 +1,26 @@
+<!doctype html>
+<meta charset="utf-8" />
+<style>
+  body { margin: 0; font: 14px Inter, sans-serif; background: #fff; color: #0f172a; }
+  .row { display: flex; align-items: center; gap: 40px; padding: 28px 40px; border-bottom: 1px solid #e2e8f0; }
+  .row.dark { background: #0f172a; }
+  svg { display: block; }
+</style>
+<body>
+<div id="c"></div>
+<script type="module">
+  // Pracovní plocha: všechny podoby loga pod sebou, světlé i tmavé pozadí.
+  // npm run serve → http://localhost:4173/pages/lab.html
+  import { loadFonts, mark, badge, wordmark, lockup, ready } from "../kit/kit.js";
+  await loadFonts();
+  const row = (dark, items) => `<div class="row${dark ? " dark" : ""}">${items.join("")}</div>`;
+  document.getElementById("c").innerHTML = [
+    row(false, [mark({ size: 220 }), mark({ size: 64 }), mark({ size: 32 }), wordmark({ height: 120 }), wordmark({ height: 36 })]),
+    row(true, [mark({ size: 220, variant: "light" }), wordmark({ height: 120, variant: "light" }), wordmark({ height: 36, variant: "light" })]),
+    row(false, [lockup({ height: 140 }), lockup({ height: 48 })]),
+    row(true, [lockup({ height: 140, variant: "light" }), lockup({ height: 220, variant: "light", mode: "stacked" })]),
+    row(false, [lockup({ height: 260, mode: "stacked" }), badge({ size: 256 }), badge({ size: 256, shape: "circle" }), badge({ size: 64 }), badge({ size: 32 }), badge({ size: 16 })]),
+  ].join("");
+  await ready();
+</script>
+</body>

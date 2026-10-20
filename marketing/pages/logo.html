@@ -1,0 +1,50 @@
+<!doctype html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../kit/kit.css" />
+<body>
+<div class="canvas" id="c"></div>
+<script type="module">
+  // Logo v jedné podobě na libovolném plátně.
+  //   ?mode=mark|wordmark|word|lockup|stacked|badge
+  //   &variant=color|light|navy|white   &bg=white|paper|navy|none   &pad=0.12
+  //   badge: &shape=square|circle|full  &fill=0.62  (fill = podíl monogramu)
+  import { setup, ready, params, loadFonts, mark, wordmark, lockup, badge } from "../kit/kit.js";
+  const { w, h } = setup(1024, 1024);
+  await loadFonts();
+  const mode = params.get("mode") ?? "mark";
+  const variant = params.get("variant") ?? "color";
+  const bg = params.get("bg") ?? "none";
+  const pad = Number(params.get("pad") ?? 0.12);
+
+  const c = document.getElementById("c");
+  c.style.background = { white: "#fff", paper: "#f8fafc", navy: "radial-gradient(120% 100% at 50% 0%, #1e293b 0%, #0f172a 60%)", none: "transparent" }[bg];
+  if (bg === "none") document.body.style.background = "transparent";
+  c.style.display = "grid";
+  c.style.placeItems = "center";
+
+  if (mode === "badge") {
+    c.innerHTML = badge({
+      size: Math.min(w, h),
+      shape: params.get("shape") ?? "square",
+      fill: Number(params.get("fill") ?? 0.62),
+      variant: params.get("variant") ?? "light",
+      small: params.has("small") ? params.get("small") === "1" : undefined,
+    });
+  } else {
+    // Vejít se do plátna minus okraj; rozhoduje přísnější z rozměrů.
+    const iw = w * (1 - 2 * pad);
+    const ih = h * (1 - 2 * pad);
+    const make = (height) =>
+      mode === "mark" ? mark({ size: height, variant })
+      : mode === "wordmark" ? wordmark({ height, variant })
+      : mode === "word" ? wordmark({ height, variant, sub: false })
+      : lockup({ height, variant, mode: mode === "stacked" ? "stacked" : "horizontal" });
+    const probe = document.createElement("div");
+    probe.innerHTML = make(100);
+    const s = probe.firstElementChild;
+    const ratio = Number(s.getAttribute("width")) / 100;
+    c.innerHTML = make(Math.min(ih, iw / ratio));
+  }
+  await ready();
+</script>
+</body>

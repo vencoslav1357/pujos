@@ -1,0 +1,13 @@
+{
+  "name": "pufr-marketing",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "serve": "node serve.mjs"
+  },
+  "devDependencies": {
+    "opentype.js": "^1.3.4",
+    "puppeteer-core": "^25.13.0"
+  }
+}
