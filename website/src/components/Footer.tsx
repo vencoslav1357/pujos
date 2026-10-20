@@ -24,14 +24,14 @@ export default function Footer() {
               <span className="h-1.5 w-1.5 rounded-full bg-blue-600 group-hover:bg-blue-500 transition-colors self-end mb-2"></span>
             </a>
             <p className="text-slate-700 font-normal text-sm leading-relaxed mb-6 max-w-sm">
-              Špičkový úklid komerčních a rezidenčních prostor. Zajišťujeme precizní pravidelnou i generální údržbu kanceláří, domů a mytí oken s důrazem na spolehlivost a preciznost.
+              Josef Pufr — úklidové služby pro kanceláře i domácnosti. Pravidelný i generální úklid, mytí oken a výjezd z Chýnova.
             </p>
             {/* Social icons */}
             <div className="flex gap-4">
               <a
                 href="https://instagram.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="nofollow noreferrer"
                 className="w-10 h-10 rounded-sm bg-white border border-slate-200 hover:border-blue-500/40 text-slate-400 hover:text-blue-600 flex items-center justify-center transition-all duration-300 shadow-sm"
                 aria-label="Instagram"
               >
@@ -44,7 +44,7 @@ export default function Footer() {
               <a
                 href="https://facebook.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="nofollow noreferrer"
                 className="w-10 h-10 rounded-sm bg-white border border-slate-200 hover:border-blue-500/40 text-slate-400 hover:text-blue-600 flex items-center justify-center transition-all duration-300 shadow-sm"
                 aria-label="Facebook"
               >
@@ -88,7 +88,7 @@ export default function Footer() {
           </div>
 
           {/* Col 4: Contact details */}
-          <div className="lg:col-span-3 flex flex-col gap-4">
+          <address className="lg:col-span-3 flex flex-col gap-4 not-italic">
             <h4 className="text-xs uppercase tracking-widest text-blue-600 font-semibold mb-6">
               Kontakt
             </h4>
@@ -110,7 +110,7 @@ export default function Footer() {
               <MapPin className="w-4 h-4 text-blue-600 mt-0.5" />
               <span>391 55 Chýnov</span>
             </div>
-          </div>
+          </address>
 
         </div>
 

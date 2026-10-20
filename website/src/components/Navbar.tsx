@@ -26,6 +26,7 @@ export default function Navbar() {
     { name: "Služby", href: "#sluzby" },
     { name: "Naše filozofie", href: "#filozofie" },
     { name: "Ceník", href: "#cenik" },
+    { name: "Dotazy", href: "#dotazy" },
   ];
 
   return (

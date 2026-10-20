@@ -18,7 +18,7 @@ async function loadInter(weight: 400 | 700, text: string) {
 
 export default async function OpengraphImage() {
   const eyebrow = "ÚKLIDOVÉ SLUŽBY";
-  const title = siteConfig.name;
+  const title = siteConfig.legalName;
   const tagline = siteConfig.tagline;
   const domain = siteUrl.replace(/^https?:\/\//, "");
   const allText = eyebrow + title + tagline + domain;
@@ -86,7 +86,8 @@ export default async function OpengraphImage() {
           <div
             style={{
               marginTop: "24px",
-              fontSize: "40px",
+              fontSize: "34px",
+              lineHeight: 1.25,
               fontWeight: 400,
               color: "#e2e8f0",
               maxWidth: "900px",
