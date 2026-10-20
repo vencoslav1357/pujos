@@ -18,14 +18,17 @@ const inter = Inter({
 const title = `${siteConfig.legalName} | ${siteConfig.tagline}`;
 const shareImageAlt = `${siteConfig.legalName} — ${siteConfig.name}`;
 
-// Ověřovací tokeny pro webmaster nástroje se přidají jen pokud existují env proměnné.
-const verification: NonNullable<Metadata["verification"]> = {};
-if (process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION) {
-  verification.google = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
-}
-if (process.env.NEXT_PUBLIC_SEZNAM_WMT) {
-  verification.other = { "seznam-wmt": process.env.NEXT_PUBLIC_SEZNAM_WMT };
-}
+// Ověřovací tokeny pro webmaster nástroje (Google Search Console, Seznam Webmaster).
+// Výchozí hodnoty lze přepsat env proměnnými.
+const verification: NonNullable<Metadata["verification"]> = {
+  google:
+    process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ??
+    "yW_pqLn1bhPPt1aJ1m9mwNqaqQl_DS1lbW2eqe7f96U",
+  other: {
+    "seznam-wmt":
+      process.env.NEXT_PUBLIC_SEZNAM_WMT ?? "vfC656FARarcD2jjtLa98WpgTga4byfV",
+  },
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -110,7 +113,7 @@ export const metadata: Metadata = {
     apple: "/favicon.ico",
   },
   manifest: "/manifest.webmanifest",
-  ...(Object.keys(verification).length ? { verification } : {}),
+  verification,
 };
 
 export const viewport: Viewport = {
