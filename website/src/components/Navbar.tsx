@@ -42,15 +42,24 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-            <span className="font-serif text-2xl font-bold tracking-widest text-slate-900 group-hover:text-blue-600 transition-colors">
-              J. PUFR
-            </span>
-            <span className="text-[10px] uppercase tracking-wider text-slate-400 font-sans self-end mb-1.5 hidden sm:inline-block">
-              úklidové služby
-            </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-600 group-hover:bg-blue-500 transition-colors self-end mb-2"></span>
+          {/* Logo: plný wordmark od md, krátký monogram v úzké liště */}
+          <a href="#" className="flex shrink-0 items-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.svg"
+              alt="J. Pufr úklidové služby"
+              width={156}
+              height={44}
+              className="hidden h-11 w-[156px] md:block"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-short.svg"
+              alt="J. Pufr úklidové služby"
+              width={156}
+              height={35}
+              className="block h-[35px] w-[156px] md:hidden"
+            />
           </a>
 
           {/* Desktop Nav Links */}

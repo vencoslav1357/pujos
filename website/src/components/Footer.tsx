@@ -14,14 +14,15 @@ export default function Footer() {
           
           {/* Col 1: Brand */}
           <div className="lg:col-span-4 flex flex-col items-start">
-            <a href="#" className="flex items-center gap-2 group mb-6">
-              <span className="font-serif text-2xl font-bold tracking-widest text-slate-900 group-hover:text-blue-600 transition-colors">
-                J. PUFR
-              </span>
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-sans self-end mb-1.5">
-                úklidové služby
-              </span>
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 group-hover:bg-blue-500 transition-colors self-end mb-2"></span>
+            <a href="#" className="mb-6 inline-flex items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.svg"
+                alt="J. Pufr úklidové služby"
+                width={156}
+                height={44}
+                className="h-11 w-[156px]"
+              />
             </a>
             <p className="text-slate-700 font-normal text-sm leading-relaxed mb-6 max-w-sm">
               Josef Pufr — úklidové služby pro kanceláře i domácnosti. Pravidelný i generální úklid, mytí oken a výjezd z Chýnova.
