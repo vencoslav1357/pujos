@@ -1,84 +1,68 @@
-# SEO – co zbývá udělat
+# SEO – co zbývá udělat ručně
 
-Technické a on-page SEO je hotové v kódu (viz `src/lib/site.ts`, `src/app/layout.tsx`,
-`sitemap.ts`, `robots.ts`, `manifest.ts`, `opengraph-image.tsx`). Tady je seznam věcí,
-které musíš dodělat ručně mimo kód, nebo doplnit konkrétní hodnoty.
+Technické a on-page SEO (titulky, kanonická URL `https://josefpufr.cz`, Open Graph, JSON-LD, FAQ, `llms.txt`, sitemap, robots a přesměrování `pujos.vercel.app`) je v kódu. Tady jsou věci, které kód sám nevyřeší.
 
-> 💡 Skoro vše je předpřipravené — většinou jen vyplníš hodnotu do `.env` nebo do
-> `src/lib/site.ts`. Vzor proměnných je v `.env.example`.
+Kanonická adresa je natvrdo `https://josefpufr.cz`, pokud nenastavíš `NEXT_PUBLIC_SITE_URL` (bez lomítka na konci). Na Vercelu tahle proměnná teď nastavená není.
 
 ---
 
-## 1. Doména
+## 1. Aby kanonická URL opravdu vracela 200
 
-- [ ] Koupit doménu (zvažováno `pufr.cz` nebo `josefpufr.cz`).
-- [ ] Nastavit `NEXT_PUBLIC_SITE_URL` na skutečnou URL **bez lomítka na konci**:
-  - lokálně v souboru `.env`
-  - na Vercelu: **Project → Settings → Environment Variables**
-- [ ] Po nasazení ověřit, že fungují:
-  - `https://TVOJE-DOMENA/sitemap.xml`
-  - `https://TVOJE-DOMENA/robots.txt`
-  - `https://TVOJE-DOMENA/opengraph-image`
+Kontrola z 20. 10. 2026:
 
-## 2. Skutečné kontaktní údaje (NAP)
+- `https://pujos.vercel.app` vrací **200** a stejný web. V kódu je host-based **301** na `https://josefpufr.cz` (jen tento hostitel, náhledy na jiných `*.vercel.app` se nepřesměrovávají).
+- `https://josefpufr.cz` teď na Vercelu dělá **308 na `https://www.josefpufr.cz`**. Primární doména v projektu je www, apex jen přesměrovává.
 
-NAP = Name, Address, Phone. Musí být **shodné** všude (web, Google, Seznam).
+- [ ] V projektu Vercel → Domains: zruš přesměrování `josefpufr.cz` → `www.josefpufr.cz`.
+- [ ] Nastav `www.josefpufr.cz` na **301** na `https://josefpufr.cz`.
+- [ ] Ověř, že `https://josefpufr.cz/` vrací 200 a `https://www.josefpufr.cz/` i `https://pujos.vercel.app/` končí na apexu.
+- [ ] Po nasazení zkontroluj `/sitemap.xml`, `/robots.txt`, `/llms.txt` a `/opengraph-image`.
 
-- [x] Doplnit v `src/lib/site.ts` (objekt `siteConfig`): `telephone`, `email`.
-- [ ] Doplnit `address.streetAddress`, případně IČO.
-- [x] Doplnit zobrazené kontakty i v komponentách:
-  - `src/components/Contact.tsx` (telefon, e-mail, spodní kontaktní lišta)
-  - `src/components/Footer.tsx` (adresa, telefon, e-mail)
-  - `src/components/Navbar.tsx` (telefon)
-- [x] Zkontrolovat otevírací dobu v `siteConfig.openingHours` (teď Po–Ne 8:00–18:00).
+Dokud apex přesměrovává na www, kanonická adresa v metadatech neodpovídá URL, která obsah opravdu vrátí.
+
+## 2. Údaje, které web nemá — doplň je, až je budeš chtít zveřejnit
+
+Do `src/lib/site.ts` (a do patičky / kontaktu), nic z toho v JSON-LD není, protože to stránka neuvádí:
+
+- [ ] Ulice a číslo popisné (teď jen `391 55 Chýnov`).
+- [ ] IČO.
+- [ ] Jestli máš cílit i na Tábor nebo Jihočeský kraj, napiš to na stránku. Samotný kód ta místa nehádat.
+- [ ] Skutečné URL profilů (Facebook, Instagram, Firmy.cz). Ikony v patičce vedou jen na obecné `facebook.com` / `instagram.com` a do `sameAs` se nedávají.
+- [ ] Recenze, až nějaké budou. `aggregateRating` se nepřidává bez reálných hodnocení.
 
 ## 3. Google Search Console
 
-- [ ] Přidat web na <https://search.google.com/search-console>.
-- [ ] Ověřit vlastnictví metodou „HTML značka" → zkopírovat hodnotu z `content="..."`
-      do `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` (env).
-- [ ] Po nasazení odeslat `sitemap.xml`.
+- [ ] Přidej `https://josefpufr.cz` na <https://search.google.com/search-console>.
+- [ ] Ověř vlastnictví metodou „HTML značka“ a hodnotu z `content` dej do `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` (lokálně i na Vercelu).
+- [ ] Po nasazení odešli `https://josefpufr.cz/sitemap.xml`.
 
-## 4. Seznam Webmaster (důležité pro ČR!)
+## 4. Seznam Webmaster
 
-- [ ] Přidat web na <https://search.seznam.cz/wmt>.
-- [ ] Ověřit přes meta tag → hodnotu `seznam-wmt` vložit do `NEXT_PUBLIC_SEZNAM_WMT` (env).
-- [ ] Odeslat `sitemap.xml`.
+- [ ] Přidej web na <https://search.seznam.cz/wmt>.
+- [ ] Ověř meta značkou `seznam-wmt` a hodnotu dej do `NEXT_PUBLIC_SEZNAM_WMT`.
+- [ ] Odešli sitemapu.
 
-## 5. Firma na Googlu (Google Business Profile)
+## 5. Google Business Profile
 
-Zásadní pro mapy a místní vyhledávání („úklid Tábor", „mytí oken okolí").
+- [ ] Profil na <https://www.google.com/business/>, kategorie **Úklidová služba**.
+- [ ] NAP (jméno, adresa, telefon) musí být stejné jako na webu. Nejdřív doplň ulici, ať se adresa neliší.
+- [ ] Oblast působení, otevírací doba Po–Ne 8:00–18:00, fotky.
 
-- [ ] Založit profil na <https://www.google.com/business/>.
-- [ ] Kategorie: **Úklidová služba** (+ související).
-- [ ] Vyplnit NAP **přesně stejně** jako na webu, oblast působení, otevírací dobu, fotky.
+## 6. Firmy.cz a citace
 
-## 6. Firmy.cz (Seznam katalog)
+- [ ] Zápis na <https://www.firmy.cz> se stejnými údaji.
+- [ ] Pár místních citací (katalogy, komory) se stejnou NAP.
+- [ ] Až budou skutečné URL, přidej je do JSON-LD jako `sameAs` v `src/lib/site.ts`. Pole tam teď není, protože žádný profil web neuvádí.
 
-- [ ] Založit zápis na <https://www.firmy.cz>.
-- [ ] Odkaz na profil přidat do `siteConfig.sameAs` v `src/lib/site.ts`.
+## 7. Recenze
 
-## 7. Profily na sociálních sítích
-
-- [ ] Vytvořit (Facebook / Instagram).
-- [ ] URL přidat do `siteConfig.sameAs` v `src/lib/site.ts` (posiluje důvěryhodnost).
-
-## 8. Recenze
-
-- [ ] Sbírat recenze (Google / Firmy.cz).
-- [ ] Až nějaké budou, ozvi se — přidám do strukturovaných dat `aggregateRating`
-      (hvězdičky ve výsledcích vyhledávání).
+- [ ] Požádej o recenze na Google a Firmy.cz.
+- [ ] Až budou, doplní se do strukturovaných dat. Nevymýšlejí se.
 
 ---
 
-## Po nasazení – kontrola
+## Po nasazení
 
-- [ ] **Rich Results Test** (kontrola JSON-LD): <https://search.google.com/test/rich-results>
-- [ ] **PageSpeed Insights** (rychlost / Core Web Vitals): <https://pagespeed.web.dev/>
-- [ ] Náhled sdílení zkontrolovat např. na <https://www.opengraph.xyz/>
-
-## Nápady na rozšíření (volitelné, posiluje SEO)
-
-- [ ] **FAQ sekce** + FAQ strukturovaná data (silné na dotazy typu „kolik stojí mytí oken").
-- [ ] **Lokální podstránky** pro města (Chýnov, Tábor, Praha) pro místní vyhledávání.
-- [ ] **Blog / rady** (long-tail návštěvnost).
+- [ ] Rich Results Test: <https://search.google.com/test/rich-results>
+- [ ] PageSpeed Insights: <https://pagespeed.web.dev/>
+- [ ] Náhled sdílení: <https://www.opengraph.xyz/>

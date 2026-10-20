@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
@@ -39,11 +40,17 @@ export default function Hero() {
           initial={{ scale: prefersReduced ? 1 : 1.2, y: prefersReduced ? "0%" : "-3%" }}
           animate={{ scale: 1, y: "0%" }}
           transition={{ duration: 1.9, ease: easeRise }}
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/cleaning_hero.png')",
-          }}
-        />
+          className="absolute inset-0"
+        >
+          <Image
+            src="/cleaning_hero.png"
+            alt="Úklidový pracovník v modrých rukavicích myje podlahu ve světlém obývacím pokoji"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </motion.div>
         {/* Light Luxury Gradients Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/80 to-white" />
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/98 via-white/85 to-transparent" />
@@ -82,7 +89,7 @@ export default function Hero() {
                 transition={{ duration: 0.9, delay: delay(0.5), ease: easeRise }}
                 className="block"
               >
-                Péče o komerční
+                Josef Pufr
               </motion.span>
             </span>
             <span className="block overflow-hidden pb-[0.2em] pr-[0.18em]">
@@ -92,7 +99,7 @@ export default function Hero() {
                 transition={{ duration: 0.9, delay: delay(0.65), ease: easeRise }}
                 className="block text-blue-gradient font-bold italic text-glow-blue"
               >
-                i rezidenční prostory
+                úklidové služby
               </motion.span>
             </span>
 
@@ -115,7 +122,7 @@ export default function Hero() {
             transition={{ duration: 1, delay: delay(0.95) }}
             className="text-slate-900 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-xl mb-10 font-sans"
           >
-            Zajišťujeme špičkový, spolehlivý a precizní úklid kanceláří, firemních prostor, rodinných domů a mytí oken na klíč. Naší vizitkou je čistota bez kompromisů.
+            Josef Pufr zajišťuje špičkové úklidové služby: úklid kanceláří, úklid domácností, rodinných domů a mytí oken. Výjezd z Chýnova, Praha a okolí i realizace po celé České republice.
           </motion.p>
 
           {/* CTA Buttons */}

@@ -15,7 +15,8 @@ const inter = Inter({
   subsets: ["latin", "latin-ext"],
 });
 
-const title = `${siteConfig.name} | ${siteConfig.tagline}`;
+const title = `${siteConfig.legalName} | ${siteConfig.tagline}`;
+const shareImageAlt = `${siteConfig.legalName} — ${siteConfig.name}`;
 
 // Ověřovací tokeny pro webmaster nástroje se přidají jen pokud existují env proměnné.
 const verification: NonNullable<Metadata["verification"]> = {};
@@ -35,30 +36,28 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   applicationName: siteConfig.name,
   keywords: [
+    "Josef Pufr",
+    "Pufr",
+    "J. Pufr",
+    "úklid",
     "úklidové služby",
-    "úklidová firma",
-    "profesionální úklid",
+    "úklid domácností",
     "úklid kanceláří",
     "úklid firem",
-    "úklid domácností",
     "úklid rodinných domů",
     "mytí oken",
-    "čištění koberců",
     "tepování koberců",
     "čištění čalounění",
     "úklid po stavbě",
-    "úklid po rekonstrukci",
     "Chýnov",
-    "Tábor",
-    "Jihočeský kraj",
-    "J. Pufr",
+    "Praha",
   ],
-  authors: [{ name: siteConfig.name, url: siteUrl }],
-  creator: siteConfig.name,
+  authors: [{ name: siteConfig.legalName, url: siteUrl }],
+  creator: siteConfig.legalName,
   publisher: siteConfig.name,
   category: "cleaning services",
   alternates: {
-    canonical: "/",
+    canonical: siteUrl,
   },
   formatDetection: {
     telephone: true,
@@ -72,11 +71,27 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title,
     description: siteConfig.description,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: shareImageAlt,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description: siteConfig.description,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: shareImageAlt,
+      },
+    ],
   },
   robots: {
     index: true,
@@ -121,7 +136,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(getStructuredData()),
+            __html: JSON.stringify(getStructuredData()).replace(/</g, "\\u003c"),
           }}
         />
         {children}

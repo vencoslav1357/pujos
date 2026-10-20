@@ -23,6 +23,15 @@ import {
 } from "lucide-react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import {
+  COMMERCIAL_BASE_PER_M2,
+  CONSTRUCTION_PER_M2,
+  RESIDENTIAL_BASE_PER_M2,
+  TRANSPORT_CZK_PER_KM,
+  UPHOLSTERY_FLAT_CZK,
+  carpetRate,
+  windowRate,
+} from "@/lib/rates";
 
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -155,33 +164,23 @@ export default function Contact() {
   };
 
   // Pricing calculations
-  const basePricePerSqm = serviceType === "residence" ? 24 : 19;
+  const basePricePerSqm = serviceType === "residence" ? RESIDENTIAL_BASE_PER_M2 : COMMERCIAL_BASE_PER_M2;
   const rawBaseCleaning = area * basePricePerSqm;
 
   // Transport calculation (7 CZK/km both directions, i.e. 14 CZK per distance km)
-  const transportCost = distance ? Math.round(distance * 7 * 2) : 0;
+  const transportCost = distance ? Math.round(distance * TRANSPORT_CZK_PER_KM * 2) : 0;
 
   // Tiered per-m² rates (min–max) selected by total area band.
-  // Carpets: 10–30 → 45–100, 30–100 → 30–45, 100–500 → 20–30, 500+ → 15–20 Kč/m²
-  const carpetRate =
-    area < 30 ? { min: 45, max: 100 }
-    : area < 100 ? { min: 30, max: 45 }
-    : area < 500 ? { min: 20, max: 30 }
-    : { min: 15, max: 20 };
-  // Windows: do 50 → 45–60, 50–200 → 35–45, 200–500 → 25–35, nad 500 → 15–25 Kč/m²
-  const windowRate =
-    area < 50 ? { min: 45, max: 60 }
-    : area < 200 ? { min: 35, max: 45 }
-    : area < 500 ? { min: 25, max: 35 }
-    : { min: 15, max: 25 };
+  const carpetRateForArea = carpetRate(area);
+  const windowRateForArea = windowRate(area);
 
   // Extras pricing (windows & carpets use tiered ranges; others are fixed)
-  const windowsCostMin = extras.windows ? area * windowRate.min : 0;
-  const windowsCostMax = extras.windows ? area * windowRate.max : 0;
-  const carpetCostMin = extras.carpet ? area * carpetRate.min : 0;
-  const carpetCostMax = extras.carpet ? area * carpetRate.max : 0;
-  const upholsteryCost = extras.upholstery ? 1500 : 0;
-  const constructionCost = extras.construction ? area * 25 : 0;
+  const windowsCostMin = extras.windows ? area * windowRateForArea.min : 0;
+  const windowsCostMax = extras.windows ? area * windowRateForArea.max : 0;
+  const carpetCostMin = extras.carpet ? area * carpetRateForArea.min : 0;
+  const carpetCostMax = extras.carpet ? area * carpetRateForArea.max : 0;
+  const upholsteryCost = extras.upholstery ? UPHOLSTERY_FLAT_CZK : 0;
+  const constructionCost = extras.construction ? area * CONSTRUCTION_PER_M2 : 0;
 
   // Core (single-valued) items carry the +25 % uncertainty spread;
   // windows & carpets contribute their explicit min–max ranges.
@@ -545,7 +544,7 @@ export default function Contact() {
                     >
                       <div>
                         <span className="font-semibold block text-slate-800 font-sans">Doplněk: Mytí oken</span>
-                        <span className="text-xs text-slate-400">{area} m² × {windowRate.min}–{windowRate.max} Kč/m²</span>
+                        <span className="text-xs text-slate-400">{area} m² × {windowRateForArea.min}–{windowRateForArea.max} Kč/m²</span>
                       </div>
                       <span className="font-bold text-slate-800">+{windowsCostMin.toLocaleString("cs-CZ")}–{windowsCostMax.toLocaleString("cs-CZ")} Kč</span>
                     </motion.div>
@@ -562,7 +561,7 @@ export default function Contact() {
                     >
                       <div>
                         <span className="font-semibold block text-slate-800 font-sans">Doplněk: Tepování koberců</span>
-                        <span className="text-xs text-slate-400">{area} m² × {carpetRate.min}–{carpetRate.max} Kč/m²</span>
+                        <span className="text-xs text-slate-400">{area} m² × {carpetRateForArea.min}–{carpetRateForArea.max} Kč/m²</span>
                       </div>
                       <span className="font-bold text-slate-800">+{carpetCostMin.toLocaleString("cs-CZ")}–{carpetCostMax.toLocaleString("cs-CZ")} Kč</span>
                     </motion.div>
@@ -851,7 +850,7 @@ export default function Contact() {
         {/* PDF Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", borderBottom: "2px solid #e2e8f0", paddingBottom: "20px", marginBottom: "30px" }}>
           <div>
-            <h1 style={{ fontSize: "28px", fontFamily: "serif", fontWeight: "bold", color: "#0f172a", margin: "0 0 5px 0", letterSpacing: "1px" }}>J. PUFR</h1>
+            <p style={{ fontSize: "28px", fontFamily: "serif", fontWeight: "bold", color: "#0f172a", margin: "0 0 5px 0", letterSpacing: "1px" }}>J. PUFR</p>
             <span style={{ fontSize: "12px", textTransform: "uppercase", letterSpacing: "2px", color: "#2563eb", fontWeight: "bold" }}>úklidové služby</span>
           </div>
           <div style={{ textAlign: "right" }}>
@@ -910,14 +909,14 @@ export default function Contact() {
             {extras.windows && (
               <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
                 <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Mytí oken a prosklených ploch</td>
-                <td style={{ padding: "12px 10px", color: "#64748b" }}>{area} m² × {windowRate.min}–{windowRate.max} Kč/m²</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>{area} m² × {windowRateForArea.min}–{windowRateForArea.max} Kč/m²</td>
                 <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{windowsCostMin.toLocaleString("cs-CZ")} – {windowsCostMax.toLocaleString("cs-CZ")} Kč</td>
               </tr>
             )}
             {extras.carpet && (
               <tr style={{ borderBottom: "1px solid #e2e8f0" }}>
                 <td style={{ padding: "12px 10px", fontWeight: "bold", color: "#0f172a" }}>Hloubkové tepování koberců</td>
-                <td style={{ padding: "12px 10px", color: "#64748b" }}>{area} m² × {carpetRate.min}–{carpetRate.max} Kč/m²</td>
+                <td style={{ padding: "12px 10px", color: "#64748b" }}>{area} m² × {carpetRateForArea.min}–{carpetRateForArea.max} Kč/m²</td>
                 <td style={{ padding: "12px 10px", textAlign: "right", fontWeight: "bold" }}>{carpetCostMin.toLocaleString("cs-CZ")} – {carpetCostMax.toLocaleString("cs-CZ")} Kč</td>
               </tr>
             )}
@@ -955,7 +954,7 @@ export default function Contact() {
         <div style={{ borderTop: "1px solid #cbd5e1", paddingTop: "20px", fontSize: "11px", color: "#64748b", textAlign: "center", lineHeight: "1.6" }}>
           <p style={{ margin: "0 0 5px 0" }}>Děkujeme za Váš zájem a těšíme se na případnou spolupráci.</p>
           <p style={{ margin: "0", fontWeight: "bold", color: "#475569" }}>
-            J. Pufr úklidové služby | +420 720 021 186 | josefpufr@email.cz | www.jpufr.cz
+            J. Pufr úklidové služby | +420 720 021 186 | josefpufr@email.cz | josefpufr.cz
           </p>
         </div>
       </div>

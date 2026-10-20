@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   Sparkles,
   Droplet,
@@ -92,6 +93,9 @@ export default function Services() {
             Profesionální úklidové služby <br />
             <span className="text-blue-gradient italic font-bold">podle nejvyšších standardů</span>
           </h2>
+          <p className="mt-6 max-w-2xl text-sm md:text-base text-slate-700 font-normal leading-relaxed">
+            Stejná péče pro úklid domácností i úklid kanceláří: okna, koberce, čalounění a úklid po rekonstrukci.
+          </p>
           <div className="w-24 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-6" />
         </div>
 
@@ -111,9 +115,12 @@ export default function Services() {
               onClick={() => handleSelectService("residence-cleaning")}
               className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-slate-200 hover:border-blue-500/30 hover:shadow-md transition-all duration-500 shadow-sm cursor-pointer"
             >
-              <div 
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
-                style={{ backgroundImage: "url('/home_clean_card.png')" }}
+              <Image
+                src="/home_clean_card.png"
+                alt="Úklid domácnosti: pracovník v rukavicích myje podlahu v obývacím pokoji"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
               
@@ -128,10 +135,10 @@ export default function Services() {
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
                 <div>
                   <h3 className="font-serif text-2xl text-white mb-1 group-hover:text-blue-200 transition-colors">
-                    Rezidenční úklid
+                    Úklid domácností
                   </h3>
                   <p className="text-xs text-slate-200 font-sans max-w-sm font-light">
-                    Dokonalá čistota a svěžest u vás doma s maximální péčí o citlivé povrchy.
+                    Úklid domácností a rodinných domů s péčí o citlivé povrchy.
                   </p>
                 </div>
                 <div className="w-10 h-10 rounded-full bg-white border border-slate-100 group-hover:border-blue-500 flex items-center justify-center text-slate-500 group-hover:text-blue-600 transition-all duration-300 shadow-sm">
@@ -183,9 +190,12 @@ export default function Services() {
               onClick={() => handleSelectService("commercial-cleaning")}
               className="relative group overflow-hidden rounded-sm h-[300px] mb-8 border border-slate-200 hover:border-blue-500/30 hover:shadow-md transition-all duration-500 shadow-sm cursor-pointer"
             >
-              <div 
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
-                style={{ backgroundImage: "url('/office_clean_card.png')" }}
+              <Image
+                src="/office_clean_card.png"
+                alt="Úklid kanceláře: pracovník v rukavicích myje podlahu v moderní kanceláři"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
               
@@ -200,10 +210,10 @@ export default function Services() {
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
                 <div>
                   <h3 className="font-serif text-2xl text-white mb-1 group-hover:text-blue-200 transition-colors">
-                    Komerční úklid
+                    Úklid kanceláří
                   </h3>
                   <p className="text-xs text-slate-200 font-sans max-w-sm font-light">
-                    Reprezentativní a hygienicky čisté prostředí pro bezproblémový chod vaší firmy.
+                    Úklid kanceláří a firemních prostor pro reprezentativní a hygienicky čisté prostředí.
                   </p>
                 </div>
                 <div className="w-10 h-10 rounded-full bg-white border border-slate-100 group-hover:border-blue-500 flex items-center justify-center text-slate-500 group-hover:text-blue-600 transition-all duration-300 shadow-sm">
